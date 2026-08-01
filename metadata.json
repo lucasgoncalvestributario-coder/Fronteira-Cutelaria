@@ -1,0 +1,6 @@
+{
+  "name": "Fronteira Cutelaria",
+  "description": "Facas Artesanais Forjadas à Mão - Cutelaria Artesanal em Camboriú SC",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
