@@ -27,7 +27,7 @@ export const Navbar: React.FC = () => {
 
   const navLinks = [
     { name: 'O Fundador', href: '#sobre' },
-    { name: 'Galeria', href: '#galeria' },
+    { name: 'Catálogo', href: '#catalogo' },
     { name: 'Materiais', href: '#materiais' },
     { name: 'Cuidados', href: '#cuidados' },
     { name: 'Instagram', href: INSTAGRAM_URL, external: true },
@@ -47,6 +47,10 @@ export const Navbar: React.FC = () => {
           <img
             src={LOGO_URL}
             alt="Fronteira Cutelaria"
+            loading="eager"
+            decoding="sync"
+            fetchPriority="high"
+            referrerPolicy="no-referrer"
             className="w-12 h-12 sm:w-16 sm:h-16 object-contain filter drop-shadow-[0_0_12px_rgba(255,106,0,0.8)] group-hover:scale-105 transition-transform duration-300"
           />
           <div className="flex flex-col">

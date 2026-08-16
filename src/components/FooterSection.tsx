@@ -17,7 +17,7 @@ export const FooterSection: React.FC = () => {
           {/* Brand Info */}
           <div className="lg:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <img src={LOGO_URL} alt="Fronteira Cutelaria" className="w-16 h-16 sm:w-20 sm:h-20 object-contain filter drop-shadow-[0_0_12px_rgba(255,106,0,0.7)]" />
+              <img src={LOGO_URL} alt="Fronteira Cutelaria" loading="eager" decoding="sync" fetchPriority="high" referrerPolicy="no-referrer" className="w-16 h-16 sm:w-20 sm:h-20 object-contain filter drop-shadow-[0_0_12px_rgba(255,106,0,0.7)]" />
               <div>
                 <h3 className="font-cinzel text-xl font-bold text-stone-100 uppercase tracking-widest">
                   Fronteira Cutelaria
@@ -45,7 +45,7 @@ export const FooterSection: React.FC = () => {
             </h4>
             <ul className="space-y-2 font-montserrat text-xs text-stone-400">
               <li><a href="#sobre" className="hover:text-[#ff6a00] transition-colors">O Fundador & História</a></li>
-              <li><a href="#galeria" className="hover:text-[#ff6a00] transition-colors">Galeria de Peças</a></li>
+              <li><a href="#catalogo" className="hover:text-[#ff6a00] transition-colors">Catálogo de Facas</a></li>
               <li><a href="#materiais" className="hover:text-[#ff6a00] transition-colors">Aço & Cabos Exóticos</a></li>
               <li><a href="#faq" className="hover:text-[#ff6a00] transition-colors">Perguntas Frequentes</a></li>
             </ul>

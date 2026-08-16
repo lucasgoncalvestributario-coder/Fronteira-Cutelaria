@@ -5,6 +5,7 @@ export const PHONE_NUMBER = '5547992787901';
 export const PHONE_NUMBER_FORMATTED = '(47) 99278-7901';
 export const WHATSAPP_URL = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent('Olá Vani! Vim pelo site da Fronteira Cutelaria e gostaria de conhecer suas facas artesanais.')}`;
 export const WHATSAPP_CUSTOM_QUOTE_URL = (text: string) => `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(text)}`;
+export const CATALOG_URL = 'https://catalogofronteiracutelaria.netlify.app/';
 export const INSTAGRAM_URL = 'https://instagram.com/fronteiracutelaria';
 export const LOCATION_TEXT = 'Avenida Minas Gerais, 305 - Anexo ao Posto Ipiranga, Camboriú - SC';
 export const FOUNDER_VIDEO_URL = '/video-vagner.mp4';

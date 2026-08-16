@@ -14,12 +14,12 @@ export const ForgeLoader: React.FC<ForgeLoaderProps> = ({ onComplete }) => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setTimeout(onComplete, 500);
+          setTimeout(onComplete, 250);
           return 100;
         }
-        return prev + 2;
+        return prev + 3;
       });
-    }, 35);
+    }, 18);
 
     return () => clearInterval(interval);
   }, [onComplete]);
@@ -29,7 +29,7 @@ export const ForgeLoader: React.FC<ForgeLoaderProps> = ({ onComplete }) => {
       <motion.div
         initial={{ opacity: 1 }}
         exit={{ opacity: 0, scale: 1.05 }}
-        transition={{ duration: 0.8, ease: 'easeInOut' }}
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
         className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#050505] text-stone-100 overflow-hidden"
       >
         {/* Soft Flame Ambient Glow */}
@@ -52,6 +52,10 @@ export const ForgeLoader: React.FC<ForgeLoaderProps> = ({ onComplete }) => {
             <img
               src={LOGO_URL}
               alt="Fronteira Cutelaria"
+              loading="eager"
+              decoding="sync"
+              fetchPriority="high"
+              referrerPolicy="no-referrer"
               className="w-48 h-48 sm:w-60 sm:h-60 object-contain"
             />
           </motion.div>

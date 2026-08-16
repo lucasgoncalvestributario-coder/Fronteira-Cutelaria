@@ -27,7 +27,7 @@ export const FinalCtaSection: React.FC = () => {
           className="p-8 sm:p-14 rounded-sm bg-black/80 border-2 border-[#ff6a00] shadow-[0_0_60px_rgba(255,106,0,0.35)] backdrop-blur-md"
         >
           <div className="flex justify-center mb-6">
-            <img src={LOGO_URL} alt="Fronteira Cutelaria" className="w-28 h-28 sm:w-36 sm:h-36 object-contain filter drop-shadow-[0_0_25px_rgba(255,106,0,0.9)]" />
+            <img src={LOGO_URL} alt="Fronteira Cutelaria" loading="eager" decoding="sync" fetchPriority="high" referrerPolicy="no-referrer" className="w-28 h-28 sm:w-36 sm:h-36 object-contain filter drop-shadow-[0_0_25px_rgba(255,106,0,0.9)]" />
           </div>
 
           <h2 className="font-cinzel text-3xl sm:text-5xl lg:text-6xl font-extrabold text-stone-100 uppercase tracking-tight mb-4">

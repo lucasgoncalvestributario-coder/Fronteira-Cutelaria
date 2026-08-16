@@ -1,295 +1,211 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Flame, X, ZoomIn, ShieldCheck, ArrowLeft, Sparkles, Hammer, Award } from 'lucide-react';
-import { GALLERY_ITEMS, WHATSAPP_CUSTOM_QUOTE_URL } from '../data/cutelariaData';
-import { GalleryItem } from '../types';
+import React from 'react';
+import { motion } from 'motion/react';
+import { Flame, ExternalLink, BookOpen, ArrowUpRight, Smartphone, CheckCircle2 } from 'lucide-react';
+import { CATALOG_URL, WHATSAPP_CUSTOM_QUOTE_URL, LOGO_URL } from '../data/cutelariaData';
 import { WhatsAppIcon } from './WhatsAppIcon';
 
 export const GallerySection: React.FC = () => {
-  const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null);
-
-  const EXACT_WHATSAPP_LINK = WHATSAPP_CUSTOM_QUOTE_URL('Olá, vim pelo site da Fronteira Cutelaria e gostaria de solicitar um orçamento para uma faca sob medida.');
-
-  // Different layout card configurations to create a youthful, dynamic bento catalog
-  // Card 0: Featured Hero (Large 2-column or 12-col span)
-  // Card 1: Sleek Tall Card
-  // Card 2: Medium Dark Phosphated Card
-  // Card 3: Modern Hybrid Card
-  // Card 4: Detailed Engraved Card
-  const getItemBentoClass = (index: number) => {
-    switch (index) {
-      case 0:
-        return 'lg:col-span-8 lg:row-span-2 bg-gradient-to-br from-[#120a04] via-[#0d0d0d] to-[#050505] border-2 border-[#ff6a0088] shadow-[0_0_45px_rgba(255,106,0,0.25)]';
-      case 1:
-        return 'lg:col-span-4 lg:row-span-2 bg-gradient-to-b from-[#0f0f0f] via-[#0a0a0a] to-[#040404] border border-[#ff6a0044]';
-      case 2:
-        return 'lg:col-span-4 bg-[#0c0c0c] border border-stone-800 hover:border-[#ff6a00aa]';
-      case 3:
-        return 'lg:col-span-4 bg-[#0c0c0c] border border-stone-800 hover:border-[#ff6a00aa]';
-      case 4:
-        return 'lg:col-span-4 bg-[#0c0c0c] border border-stone-800 hover:border-[#ff6a00aa]';
-      default:
-        return 'lg:col-span-4 bg-[#0c0c0c] border border-stone-800 hover:border-[#ff6a00aa]';
-    }
-  };
+  const WHATSAPP_ORDER_LINK = WHATSAPP_CUSTOM_QUOTE_URL('Olá! Gostaria de tirar dúvidas sobre o catálogo e encomendar uma faca sob medida.');
 
   return (
-    <section id="galeria" className="relative py-16 sm:py-28 bg-[#050505] border-t border-b border-[#ff6a0022]">
-      {/* Background Subtle Sparks & Ambient Glow */}
+    <section id="catalogo" className="relative py-16 sm:py-24 bg-[#050505] border-t border-b border-[#ff6a0022] scroll-mt-20">
+      {/* Invisible anchor for backward compatibility with #galeria */}
+      <div id="galeria" className="absolute -top-24 left-0 w-full h-1 pointer-events-none" />
+
+      {/* Ambient Forge Glow */}
       <div className="absolute inset-0 bg-brushed-metal opacity-15 pointer-events-none" />
-      <div className="absolute top-1/3 right-0 w-96 h-96 bg-[#ff6a0010] rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 left-0 w-80 h-80 bg-[#e6390010] rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 right-0 w-96 h-96 bg-[#ff6a0020] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 left-0 w-96 h-96 bg-[#e6390018] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#ff6a0044] bg-[#ff6a0011] mb-4">
             <Flame size={14} className="text-[#ff6a00] animate-pulse" />
             <span className="font-montserrat text-xs uppercase tracking-[0.25em] text-[#ff6a00] font-bold">
-              Mini Catálogo de Referência
+              Catálogo Oficial Interativo
             </span>
           </div>
 
           <h2 className="font-cinzel text-3xl sm:text-5xl lg:text-6xl font-black text-stone-100 uppercase tracking-tight mb-4">
-            Modelos de <span className="text-[#ff6a00] text-lava-glow">Cutelaria Artesanal</span>
+            Catálogo Completo de <span className="text-[#ff6a00] text-lava-glow">Facas Artesanais</span>
           </h2>
 
-          <p className="font-montserrat text-stone-300 text-xs sm:text-base font-light leading-relaxed max-w-2xl mx-auto">
-            Abaixo estão alguns dos nossos modelos de referência. <strong className="text-[#ff6a00] font-semibold">Não fabricamos apenas estes</strong> — criamos o seu projeto exclusivo sob medida com o tipo de aço, cabo e gravação que você desejar!
+          <p className="font-montserrat text-stone-300 text-sm sm:text-base font-light leading-relaxed max-w-2xl mx-auto">
+            Acesse nosso catálogo digital online para conferir todas as peças disponíveis, modelos sob medida, fotos em alta resolução e valores atualizados.
           </p>
 
           <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[#ff6a00] to-transparent mx-auto mt-5" />
         </div>
 
-        {/* Dynamic Bento Grid - Unified Mini Catalog without side scroll */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-5 sm:gap-6">
-          {GALLERY_ITEMS.map((item, index) => {
-            const isHero = index === 0;
-
-            return (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`group relative rounded-xl overflow-hidden shadow-2xl hover:shadow-[0_0_35px_rgba(255,106,0,0.3)] transition-all duration-300 flex flex-col justify-between ${getItemBentoClass(index)}`}
-              >
-                {/* Main Content Clickable for Lightbox */}
-                <div 
-                  onClick={() => setLightboxItem(item)}
-                  className="cursor-pointer flex flex-col h-full justify-between"
-                >
-                  {/* Top Image Container */}
-                  <div className={`relative w-full overflow-hidden group/img ${isHero ? 'h-64 sm:h-80 lg:h-96' : 'h-56 sm:h-64'}`}>
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover/img:scale-105 transition duration-700 filter brightness-95 group-hover/img:brightness-100"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-black/50" />
-
-                    {/* Top Badges */}
-                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
-                      <span className="px-2.5 py-1 rounded bg-black/80 border border-[#ff6a0066] text-[#ff6a00] font-montserrat text-[10px] sm:text-xs font-bold uppercase tracking-wider backdrop-blur-md">
-                        {isHero ? '🔥 Modelo Mais Pedido' : item.categoryLabel}
-                      </span>
-
-                      <div className="p-1.5 sm:p-2 rounded-full bg-black/80 text-stone-200 group-hover/img:text-[#ff6a00] border border-stone-700/80 backdrop-blur-sm transition-all flex items-center gap-1 text-[10px] font-montserrat uppercase font-bold">
-                        <ZoomIn size={14} />
-                        <span className="hidden sm:inline">Ampliar Foto</span>
-                      </div>
-                    </div>
-
-                    {/* Image Bottom Overlay Title */}
-                    <div className="absolute bottom-3 left-3 right-3">
-                      <h3 className={`font-cinzel font-bold text-stone-100 uppercase leading-tight ${isHero ? 'text-xl sm:text-3xl' : 'text-base sm:text-lg'}`}>
-                        {item.title}
-                      </h3>
-                    </div>
-                  </div>
-
-                  {/* Card Specs Body */}
-                  <div className={`p-4 sm:p-6 space-y-3 bg-[#0d0d0d] flex-1 flex flex-col justify-between`}>
-                    <p className="font-montserrat text-xs sm:text-sm text-stone-300 font-light leading-relaxed line-clamp-2">
-                      {item.description}
-                    </p>
-
-                    {/* Key Technical Specifications Chips */}
-                    <div className="grid grid-cols-2 gap-2 text-[11px] font-montserrat">
-                      <div className="p-2 rounded bg-stone-950 border border-stone-800">
-                        <span className="text-stone-400 block text-[9px] uppercase font-bold">Aço Forjado</span>
-                        <strong className="text-[#ff6a00] truncate block">{item.steel}</strong>
-                      </div>
-
-                      <div className="p-2 rounded bg-stone-950 border border-stone-800">
-                        <span className="text-stone-400 block text-[9px] uppercase font-bold">Lâmina</span>
-                        <strong className="text-stone-200 truncate block">{item.bladeLength}</strong>
-                      </div>
-                    </div>
-
-                    {/* Handle Detail */}
-                    <div className="p-2.5 rounded bg-stone-950/80 border border-stone-800/80 flex items-center justify-between text-xs font-montserrat">
-                      <span className="text-stone-400 font-medium">Cabo Artesanal:</span>
-                      <strong className="text-stone-200 text-right truncate max-w-[160px] sm:max-w-[220px] ml-2">
-                        {item.handle}
-                      </strong>
-                    </div>
-
-                    {/* Differentials Bullet List */}
-                    <div className="space-y-1.5 pt-1">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                        {item.details.slice(0, isHero ? 4 : 2).map((dt, idx) => (
-                          <div key={idx} className="flex items-center gap-1.5 text-[11px] font-montserrat text-stone-300">
-                            <ShieldCheck size={13} className="text-[#ff6a00] shrink-0" />
-                            <span className="truncate">{dt}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* CUSTOM ORDER BANNER AT THE BOTTOM OF CATÁLOGO */}
+        {/* MAIN INTERACTIVE CATALOG SHOWCASE CARD */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mt-12 sm:mt-16 p-6 sm:p-10 rounded-2xl bg-gradient-to-r from-stone-950 via-[#120a04] to-stone-950 border-2 border-[#ff6a0088] shadow-[0_0_50px_rgba(255,106,0,0.25)] relative overflow-hidden"
+          transition={{ duration: 0.7 }}
+          className="relative max-w-5xl mx-auto rounded-2xl bg-gradient-to-br from-[#140a04] via-[#0d0d0d] to-[#060606] border-2 border-[#ff6a0088] p-6 sm:p-10 lg:p-12 shadow-[0_0_60px_rgba(255,106,0,0.35)] hover:shadow-[0_0_90px_rgba(255,106,0,0.55)] transition-all duration-500 overflow-hidden"
         >
-          {/* Flame Ambient Effects */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-[#ff6a0015] rounded-full blur-3xl pointer-events-none" />
+          {/* Card Top Right Ambient Watermark */}
+          <div className="absolute -top-10 -right-10 w-80 h-80 bg-[#ff6a0025] rounded-full blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
-            <div className="space-y-2 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ff6a0022] border border-[#ff6a0055] text-[#ff6a00] font-montserrat text-xs font-bold uppercase tracking-widest">
-                <Sparkles size={14} />
-                <span>Projeto Sob Medida Exclusivo</span>
-              </div>
-
-              <h3 className="font-cinzel text-2xl sm:text-4xl font-black text-stone-100 uppercase tracking-tight">
-                Quer um Modelo Diferente ou Personalizado?
-              </h3>
-
-              <p className="font-montserrat text-stone-300 text-xs sm:text-base font-light leading-relaxed">
-                Além destes modelos de referência, fabricamos facas sob medida para churrasco, caça, pesca e colecionadores. Escolha o aço, cabo e gravação a laser com seu nome ou marca!
-              </p>
+          {/* Quick Online Badge for Fast Mobile Users */}
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-6 sm:pb-8 border-b border-stone-800/80">
+            <div className="flex items-center gap-2.5">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#25D366]"></span>
+              </span>
+              <span className="font-montserrat text-xs sm:text-sm font-bold text-stone-200 uppercase tracking-wider">
+                Catálogo Online Disponível • Acesso Imediato
+              </span>
             </div>
 
-            <a
-              href={EXACT_WHATSAPP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="metallic-sheen shrink-0 px-6 py-4 rounded-lg bg-[#25D366] text-stone-950 hover:bg-[#1eb854] font-montserrat text-xs sm:text-sm font-black uppercase tracking-wider shadow-[0_0_30px_rgba(37,211,102,0.5)] transition-all flex items-center justify-center gap-2.5"
-            >
-              <WhatsAppIcon size={22} color="currentColor" />
-              <span>Solicitar Faca Sob Medida</span>
-            </a>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 border border-stone-700 text-stone-300 font-montserrat text-[11px] font-medium">
+              <Smartphone size={14} className="text-[#ff6a00]" />
+              <span>Otimizado para Celular & Desktop</span>
+            </div>
           </div>
+
+          {/* Core Content Grid */}
+          <div className="pt-8 sm:pt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            
+            {/* Left: Giant Glowing Clickable Catalog Logo Emblem */}
+            <div className="lg:col-span-6 flex flex-col items-center justify-center">
+              <a
+                href={CATALOG_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Abrir Catálogo Oficial da Fronteira Cutelaria"
+                className="group/emblem relative w-full max-w-[360px] sm:max-w-[420px] aspect-square rounded-2xl bg-gradient-to-b from-[#1c0f06] via-[#0f0904] to-black border-2 border-[#ff6a00] p-6 sm:p-8 flex flex-col items-center justify-between text-center shadow-[0_0_50px_rgba(255,106,0,0.5)] hover:shadow-[0_0_90px_rgba(255,106,0,0.85)] hover:scale-[1.03] active:scale-[0.98] transition-all duration-500 cursor-pointer overflow-hidden"
+              >
+                {/* Intense Pulsing Glow Backgrounds */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#ff6a0030] via-transparent to-[#ff6a0020] opacity-80 group-hover/emblem:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,106,0,0.35)_0%,transparent_70%)] animate-pulse" />
+
+                {/* Top Badge Inside Card */}
+                <div className="relative z-10 w-full flex items-center justify-between">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/80 border border-[#ff6a0088] text-[#ff6a00] font-montserrat text-[11px] font-bold uppercase tracking-wider shadow-md">
+                    <BookOpen size={13} />
+                    <span>Catálogo Oficial</span>
+                  </div>
+                  <div className="p-2 rounded-full bg-[#ff6a00] text-black shadow-[0_0_15px_rgba(255,106,0,0.8)] group-hover/emblem:scale-110 transition-transform">
+                    <ExternalLink size={16} />
+                  </div>
+                </div>
+
+                {/* Giant Glowing Logo Filling the Center */}
+                <div className="relative z-10 w-full flex-1 flex items-center justify-center my-2 p-2">
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.04, 1],
+                      filter: [
+                        'drop-shadow(0 0 25px rgba(255,106,0,0.85)) brightness(1)',
+                        'drop-shadow(0 0 45px rgba(255,106,0,1)) brightness(1.15)',
+                        'drop-shadow(0 0 25px rgba(255,106,0,0.85)) brightness(1)',
+                      ],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    }}
+                    className="w-full h-full flex items-center justify-center"
+                  >
+                    <img
+                      src={LOGO_URL}
+                      alt="Logo Fronteira Cutelaria"
+                      loading="eager"
+                      fetchPriority="high"
+                      decoding="sync"
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full max-h-[220px] sm:max-h-[260px] object-contain filter drop-shadow-[0_0_35px_rgba(255,106,0,0.95)] group-hover/emblem:scale-105 transition-transform duration-500"
+                    />
+                  </motion.div>
+                </div>
+
+                {/* Bottom Callout Bar inside Emblem */}
+                <div className="relative z-10 w-full pt-3 border-t border-[#ff6a0055] flex flex-col items-center">
+                  <span className="font-cinzel text-base sm:text-lg font-black text-stone-100 uppercase tracking-widest group-hover/emblem:text-[#ff6a00] transition-colors flex items-center gap-1.5">
+                    <span>Clique para Abrir o Catálogo</span>
+                    <ArrowUpRight size={18} className="text-[#ff6a00]" />
+                  </span>
+                  <span className="font-montserrat text-[11px] text-stone-400 font-mono mt-0.5">
+                    catalogofronteiracutelaria.netlify.app
+                  </span>
+                </div>
+              </a>
+            </div>
+
+            {/* Right: Explanatory Content & Fast Action Direction */}
+            <div className="lg:col-span-6 space-y-5 text-center lg:text-left">
+              <div>
+                <span className="font-montserrat text-xs font-black tracking-[0.2em] text-[#ff6a00] uppercase block mb-1">
+                  Direcionamento Rápido
+                </span>
+                <h3 className="font-cinzel text-2xl sm:text-3xl lg:text-4xl font-extrabold text-stone-100 uppercase leading-tight">
+                  Descubra Nossas Lâminas em Poucos Cliques
+                </h3>
+              </div>
+
+              <p className="font-montserrat text-stone-300 text-sm sm:text-base leading-relaxed font-light">
+                Nosso catálogo reúne a coleção completa de modelos forjados pela <strong className="text-stone-100 font-semibold">Fronteira Cutelaria</strong>. Navegue pelas linhas de churrasco, campeira e colecionador, visualize fotos detalhadas da empunhadura e solicite sua peça diretamente.
+              </p>
+
+              {/* Highlights Feature List */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
+                <div className="flex items-center gap-2 p-2.5 rounded-lg bg-black/60 border border-stone-800 text-left">
+                  <CheckCircle2 size={16} className="text-[#ff6a00] shrink-0" />
+                  <span className="font-montserrat text-xs text-stone-300 font-medium">Fotos em alta definição</span>
+                </div>
+                <div className="flex items-center gap-2 p-2.5 rounded-lg bg-black/60 border border-stone-800 text-left">
+                  <CheckCircle2 size={16} className="text-[#ff6a00] shrink-0" />
+                  <span className="font-montserrat text-xs text-stone-300 font-medium">Valores e especificações</span>
+                </div>
+                <div className="flex items-center gap-2 p-2.5 rounded-lg bg-black/60 border border-stone-800 text-left">
+                  <CheckCircle2 size={16} className="text-[#ff6a00] shrink-0" />
+                  <span className="font-montserrat text-xs text-stone-300 font-medium">Peças a pronta-entrega</span>
+                </div>
+                <div className="flex items-center gap-2 p-2.5 rounded-lg bg-black/60 border border-stone-800 text-left">
+                  <CheckCircle2 size={16} className="text-[#ff6a00] shrink-0" />
+                  <span className="font-montserrat text-xs text-stone-300 font-medium">Projetos sob encomenda</span>
+                </div>
+              </div>
+
+              {/* ACTION BUTTONS (MOBILE-FIRST PROMINENT CLICK TARGETS) */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-3">
+                {/* Direct Main Link Button */}
+                <a
+                  href={CATALOG_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="metallic-sheen flex-1 min-h-[52px] px-6 py-4 rounded-xl bg-gradient-to-r from-[#ff6a00] to-[#e65c00] text-black font-montserrat text-xs sm:text-sm font-black uppercase tracking-wider shadow-[0_0_30px_rgba(255,106,0,0.6)] hover:shadow-[0_0_45px_rgba(255,106,0,0.9)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-center"
+                >
+                  <BookOpen size={18} />
+                  <span>Acessar Catálogo Completo</span>
+                  <ArrowUpRight size={18} />
+                </a>
+
+                {/* Direct WhatsApp Quote Button */}
+                <a
+                  href={WHATSAPP_ORDER_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="min-h-[52px] px-5 py-4 rounded-xl bg-black/90 hover:bg-[#25D366]/10 text-stone-200 hover:text-[#25D366] border border-[#25D366] font-montserrat text-xs sm:text-sm font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(37,211,102,0.25)] hover:shadow-[0_0_30px_rgba(37,211,102,0.5)] transition-all flex items-center justify-center gap-2 text-center"
+                >
+                  <WhatsAppIcon size={18} color="#25D366" />
+                  <span>Falar no WhatsApp</span>
+                </a>
+              </div>
+
+            </div>
+
+          </div>
+
         </motion.div>
 
       </div>
-
-      {/* Lightbox Modal (Enlarged Photo View) */}
-      <AnimatePresence>
-        {lightboxItem && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/95 backdrop-blur-md overflow-y-auto"
-            onClick={() => setLightboxItem(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-4xl w-full bg-[#0a0a0a] rounded-xl border-2 border-[#ff6a00] p-4 sm:p-6 shadow-[0_0_60px_rgba(255,106,0,0.4)] my-auto max-h-[92vh] overflow-y-auto"
-            >
-              {/* Header Close & Voltar Buttons */}
-              <div className="flex justify-between items-center pb-3 mb-4 border-b border-stone-800">
-                <button
-                  onClick={() => setLightboxItem(null)}
-                  className="px-3 py-1.5 rounded bg-stone-900 border border-stone-700 text-stone-300 hover:text-[#ff6a00] hover:border-[#ff6a00] transition-colors font-montserrat text-xs uppercase font-bold flex items-center gap-1.5"
-                >
-                  <ArrowLeft size={16} />
-                  <span>Voltar ao Catálogo</span>
-                </button>
-
-                <button
-                  onClick={() => setLightboxItem(null)}
-                  className="p-1.5 rounded-full bg-stone-900 border border-stone-700 text-stone-300 hover:text-[#ff6a00] hover:border-[#ff6a00] transition-colors"
-                  aria-label="Fechar"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
-                {/* Modal Large Image */}
-                <div className="relative h-64 sm:h-80 md:h-[380px] rounded-lg overflow-hidden border border-stone-800 bg-black flex items-center justify-center">
-                  <img
-                    src={lightboxItem.image}
-                    alt={lightboxItem.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                {/* Modal Details */}
-                <div className="space-y-3 sm:space-y-4">
-                  <span className="px-2.5 py-1 rounded bg-[#ff6a0022] border border-[#ff6a0055] text-[#ff6a00] font-montserrat text-[11px] sm:text-xs font-bold uppercase tracking-wider">
-                    {lightboxItem.categoryLabel}
-                  </span>
-
-                  <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-100 uppercase">
-                    {lightboxItem.title}
-                  </h3>
-
-                  <p className="font-montserrat text-xs sm:text-sm text-stone-300 leading-relaxed font-light">
-                    {lightboxItem.description}
-                  </p>
-
-                  <div className="space-y-1.5 bg-stone-900/80 p-3 sm:p-4 rounded border border-stone-800 text-xs font-montserrat text-stone-300">
-                    <div><strong className="text-stone-100">Tipo de Aço:</strong> {lightboxItem.steel}</div>
-                    <div><strong className="text-stone-100">Cabo:</strong> {lightboxItem.handle}</div>
-                    <div><strong className="text-stone-100">Tamanho da Lâmina:</strong> {lightboxItem.bladeLength}</div>
-                  </div>
-
-                  <div className="space-y-1">
-                    <span className="font-montserrat text-xs font-bold text-stone-200 uppercase">Diferenciais da Peça:</span>
-                    <ul className="space-y-1 text-xs font-montserrat text-stone-400">
-                      {lightboxItem.details.map((dt, i) => (
-                        <li key={i} className="flex items-center gap-2">
-                          <ShieldCheck size={14} className="text-[#ff6a00] shrink-0" />
-                          <span>{dt}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <a
-                    href={WHATSAPP_CUSTOM_QUOTE_URL(`Olá Vani! Vi o modelo "${lightboxItem.title}" no Mini Catálogo do site e gostaria de solicitar um orçamento.`)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full metallic-sheen flex items-center justify-center gap-2 py-3.5 rounded-lg bg-[#25D366] text-stone-950 font-montserrat text-xs font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_35px_rgba(37,211,102,0.7)] transition-all mt-3"
-                  >
-                    <WhatsAppIcon size={18} color="currentColor" />
-                    <span>Solicitar Orçamento no WhatsApp</span>
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 };

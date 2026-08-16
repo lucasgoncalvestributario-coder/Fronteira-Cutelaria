@@ -31,7 +31,7 @@ export const AuthenticityCertSection: React.FC = () => {
         >
           {/* Certificate Watermark Background */}
           <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
-            <img src={LOGO_URL} alt="Watermark" className="w-96 h-96 object-contain" />
+            <img src={LOGO_URL} alt="Watermark" loading="eager" decoding="sync" fetchPriority="high" referrerPolicy="no-referrer" className="w-96 h-96 object-contain" />
           </div>
 
           {/* Certificate Inner Border */}
@@ -39,7 +39,7 @@ export const AuthenticityCertSection: React.FC = () => {
             
             <div className="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-stone-800 gap-4">
               <div className="flex items-center gap-3">
-                <img src={LOGO_URL} alt="Fronteira Cutelaria" className="w-14 h-14 object-contain" />
+                <img src={LOGO_URL} alt="Fronteira Cutelaria" loading="eager" decoding="sync" fetchPriority="high" referrerPolicy="no-referrer" className="w-14 h-14 object-contain" />
                 <div>
                   <h3 className="font-cinzel text-lg font-bold text-stone-100 uppercase tracking-widest">
                     Certificado de Autenticidade

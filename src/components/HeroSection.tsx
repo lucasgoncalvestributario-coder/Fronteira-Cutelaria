@@ -45,6 +45,10 @@ export const HeroSection: React.FC = () => {
           <img
             src={LOGO_URL}
             alt="Logo Fronteira Cutelaria"
+            loading="eager"
+            decoding="sync"
+            fetchPriority="high"
+            referrerPolicy="no-referrer"
             className="relative z-10 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 object-contain filter drop-shadow-[0_0_35px_rgba(255,106,0,0.95)] transform group-hover:scale-105 transition duration-500"
           />
         </motion.div>
