@@ -8,7 +8,7 @@ import { WhatsAppIcon } from './WhatsAppIcon';
 export const GallerySection: React.FC = () => {
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null);
 
-  const EXACT_WHATSAPP_LINK = 'https://wa.me/554797708366?text=Ol%C3%A1,%20vim%20pelo%20site%20da%20Fronteira%20Cutelaria%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%20uma%20faca%20sob%20medida.';
+  const EXACT_WHATSAPP_LINK = WHATSAPP_CUSTOM_QUOTE_URL('Olá, vim pelo site da Fronteira Cutelaria e gostaria de solicitar um orçamento para uma faca sob medida.');
 
   // Different layout card configurations to create a youthful, dynamic bento catalog
   // Card 0: Featured Hero (Large 2-column or 12-col span)

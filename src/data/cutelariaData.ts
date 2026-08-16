@@ -1,7 +1,8 @@
 import { MaterialInfo, GalleryItem, ProcessStep, Testimonial, FaqItem } from '../types';
 
 export const LOGO_URL = 'https://i.postimg.cc/G3jyNHMZ/Chat-GPT-Image-22-de-jul-de-2026-17-32-37.png';
-export const PHONE_NUMBER = '554797708366';
+export const PHONE_NUMBER = '5547992787901';
+export const PHONE_NUMBER_FORMATTED = '(47) 99278-7901';
 export const WHATSAPP_URL = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent('Olá Vani! Vim pelo site da Fronteira Cutelaria e gostaria de conhecer suas facas artesanais.')}`;
 export const WHATSAPP_CUSTOM_QUOTE_URL = (text: string) => `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(text)}`;
 export const INSTAGRAM_URL = 'https://instagram.com/fronteiracutelaria';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flame, Instagram, MapPin, ShieldCheck, Heart } from 'lucide-react';
-import { LOGO_URL, WHATSAPP_URL, INSTAGRAM_URL, LOCATION_TEXT } from '../data/cutelariaData';
+import { LOGO_URL, WHATSAPP_URL, INSTAGRAM_URL, LOCATION_TEXT, PHONE_NUMBER_FORMATTED } from '../data/cutelariaData';
 import { WhatsAppIcon } from './WhatsAppIcon';
 
 export const FooterSection: React.FC = () => {
@@ -61,10 +61,13 @@ export const FooterSection: React.FC = () => {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 text-stone-200 hover:text-[#25D366] transition-colors p-3 rounded bg-stone-900 border border-[#25D366] font-semibold shadow-[0_0_15px_rgba(37,211,102,0.2)]"
+                className="flex items-center justify-between gap-2.5 text-stone-200 hover:text-[#25D366] transition-colors p-3 rounded bg-stone-900 border border-[#25D366] font-semibold shadow-[0_0_15px_rgba(37,211,102,0.2)]"
               >
-                <WhatsAppIcon size={18} color="#25D366" />
-                <span>Falar direto com a loja</span>
+                <div className="flex items-center gap-2.5">
+                  <WhatsAppIcon size={18} color="#25D366" />
+                  <span>Falar direto com a loja</span>
+                </div>
+                <span className="text-[#25D366] font-mono text-[11px] font-bold">{PHONE_NUMBER_FORMATTED}</span>
               </a>
 
               <a
