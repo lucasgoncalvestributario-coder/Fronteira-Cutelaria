@@ -120,13 +120,6 @@ export const AboutSection: React.FC = () => {
         
         {/* Section Category Header */}
         <div className="text-center mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#ff6a0044] bg-[#ff6a0011] mb-4">
-            <Flame size={14} className="text-[#ff6a00] animate-pulse" />
-            <span className="font-montserrat text-xs uppercase tracking-[0.25em] text-[#ff6a00] font-bold">
-              Mestre Cuteleiro & Fundador
-            </span>
-          </div>
-
           <h2 className="font-cinzel text-3xl sm:text-5xl lg:text-6xl font-black text-stone-100 uppercase tracking-tight">
             A Alma da <span className="text-[#ff6a00] text-lava-glow">Fronteira Cutelaria</span>
           </h2>

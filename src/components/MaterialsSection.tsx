@@ -1,10 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, Flame, ChevronRight, Sparkles } from 'lucide-react';
 import { STEELS_DATA, HANDLES_DATA, WHATSAPP_CUSTOM_QUOTE_URL } from '../data/cutelariaData';
 
+interface CardImageProps {
+  src: string;
+  alt: string;
+  className?: string;
+}
+
+const CardImageWithSkeleton: React.FC<CardImageProps> = ({ src, alt, className = '' }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <div className="relative w-full h-full bg-[#121212] overflow-hidden">
+      {/* Lightweight skeleton placeholder with subtle pulse */}
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-stone-900/90 animate-pulse flex items-center justify-center">
+          <div className="w-7 h-7 rounded-full border border-stone-800 border-t-[#ff6a00] animate-spin opacity-40" />
+        </div>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        width={600}
+        height={600}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setIsLoaded(true)}
+        className={`${className} transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+      />
+    </div>
+  );
+};
+
 export const MaterialsSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'steel' | 'handle'>('steel');
+
+  useEffect(() => {
+    // Warm up handles images in background after main thread is idle
+    const preloadHandles = () => {
+      HANDLES_DATA.forEach((item) => {
+        const img = new Image();
+        img.src = item.image;
+      });
+    };
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(preloadHandles);
+    } else {
+      const timer = setTimeout(preloadHandles, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   return (
     <section id="materiais" className="relative py-20 sm:py-24 bg-gradient-to-b from-[#ff6a00] via-[#f25e00] to-[#e65200] border-t-2 border-b-2 border-black text-stone-950">
@@ -14,13 +62,6 @@ export const MaterialsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border-2 border-black bg-black text-[#ff6a00] mb-4 shadow-lg">
-            <Flame size={16} className="text-[#ff6a00] animate-pulse" />
-            <span className="font-montserrat text-xs uppercase tracking-widest font-black">
-              Matéria-prima de Excelência
-            </span>
-          </div>
-
           <h2 className="font-cinzel text-3xl sm:text-5xl font-black text-black uppercase tracking-tight mb-4 drop-shadow-sm">
             A Nobreza dos Materiais
           </h2>
@@ -70,12 +111,12 @@ export const MaterialsSection: React.FC = () => {
                 <div>
                   {/* Card Image Header */}
                   <div className="relative aspect-square sm:aspect-auto sm:h-72 w-full overflow-hidden">
-                    <img
+                    <CardImageWithSkeleton
                       src={steel.image}
                       alt={steel.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-500 filter brightness-100"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30 pointer-events-none" />
                     
                     {steel.badge && (
                       <span className="absolute top-2 left-2 sm:top-3 sm:left-3 px-2 py-1 rounded bg-[#ff6a00] border border-black text-black font-montserrat text-[9px] sm:text-[11px] font-black uppercase tracking-wider shadow-md">
@@ -129,12 +170,12 @@ export const MaterialsSection: React.FC = () => {
               >
                 <div>
                   <div className="relative aspect-square sm:aspect-auto sm:h-72 w-full overflow-hidden">
-                    <img
+                    <CardImageWithSkeleton
                       src={handle.image}
                       alt={handle.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-500 filter brightness-100"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30 pointer-events-none" />
                     
                     {handle.badge && (
                       <span className="absolute top-2 left-2 sm:top-3 sm:left-3 px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded bg-[#ff6a00] border border-black text-black font-montserrat text-[8px] sm:text-[10px] font-black uppercase tracking-wider shadow-md">

@@ -27,9 +27,9 @@ export const Navbar: React.FC = () => {
 
   const navLinks = [
     { name: 'O Fundador', href: '#sobre' },
-    { name: 'Catálogo', href: '#catalogo' },
     { name: 'Materiais', href: '#materiais' },
     { name: 'Cuidados', href: '#cuidados' },
+    { name: 'Loja Física', href: '#loja-fisica' },
     { name: 'Instagram', href: INSTAGRAM_URL, external: true },
   ];
 

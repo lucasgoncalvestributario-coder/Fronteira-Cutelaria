@@ -16,13 +16,6 @@ export const FaqSection: React.FC = () => {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-sm border border-[#ff6a0044] bg-[#ff6a0011] mb-4">
-            <HelpCircle size={14} className="text-[#ff6a00]" />
-            <span className="font-montserrat text-xs uppercase tracking-widest text-[#ff6a00] font-semibold">
-              Tire Suas Dúvidas
-            </span>
-          </div>
-
           <h2 className="font-cinzel text-3xl sm:text-5xl font-bold text-stone-100 uppercase tracking-tight mb-4">
             Perguntas <span className="text-[#ff6a00] text-lava-glow">Frequentes</span>
           </h2>

@@ -45,7 +45,6 @@ export const FooterSection: React.FC = () => {
             </h4>
             <ul className="space-y-2 font-montserrat text-xs text-stone-400">
               <li><a href="#sobre" className="hover:text-[#ff6a00] transition-colors">O Fundador & História</a></li>
-              <li><a href="#catalogo" className="hover:text-[#ff6a00] transition-colors">Catálogo de Facas</a></li>
               <li><a href="#materiais" className="hover:text-[#ff6a00] transition-colors">Aço & Cabos Exóticos</a></li>
               <li><a href="#faq" className="hover:text-[#ff6a00] transition-colors">Perguntas Frequentes</a></li>
             </ul>

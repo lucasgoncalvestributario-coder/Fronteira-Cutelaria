@@ -1,11 +1,10 @@
 import { MaterialInfo, GalleryItem, ProcessStep, Testimonial, FaqItem } from '../types';
 
 export const LOGO_URL = 'https://i.postimg.cc/G3jyNHMZ/Chat-GPT-Image-22-de-jul-de-2026-17-32-37.png';
-export const PHONE_NUMBER = '5547992787901';
-export const PHONE_NUMBER_FORMATTED = '(47) 99278-7901';
-export const WHATSAPP_URL = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent('Olá Vani! Vim pelo site da Fronteira Cutelaria e gostaria de conhecer suas facas artesanais.')}`;
+export const PHONE_NUMBER = '5547997374307';
+export const PHONE_NUMBER_FORMATTED = '(47) 99737-4307';
+export const WHATSAPP_URL = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent('Olá! Vim pelo site da Fronteira Cutelaria e gostaria de conhecer suas facas artesanais.')}`;
 export const WHATSAPP_CUSTOM_QUOTE_URL = (text: string) => `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(text)}`;
-export const CATALOG_URL = 'https://catalogofronteiracutelaria.netlify.app/';
 export const INSTAGRAM_URL = 'https://instagram.com/fronteiracutelaria';
 export const LOCATION_TEXT = 'Avenida Minas Gerais, 305 - Anexo ao Posto Ipiranga, Camboriú - SC';
 export const FOUNDER_VIDEO_URL = '/video-vagner.mp4';
@@ -16,7 +15,7 @@ export const FOUNDER_MESSAGE = {
   title: "Recado do Fundador e Cuteleiro",
   author: "Vagner Gonçalves",
   role: "Fundador & Mestre Cuteleiro",
-  text: "Bem-vindo à Fronteira Cutelaria! Aqui em nossa fábrica em Camboriú - SC, moldamos cada lâmina artesanalmente com rigor técnico, alma e paixão. Se você não encontrar no catálogo a peça exata que deseja, fabricamos o seu projeto exclusivo sob medida!",
+  text: "Bem-vindo à Fronteira Cutelaria! Aqui em nossa fábrica em Camboriú - SC, moldamos cada lâmina artesanalmente com rigor técnico, alma e paixão. Fabricamos o seu projeto exclusivo sob medida com o aço, cabo e acabamento que você desejar!",
 };
 
 export const STEELS_DATA: MaterialInfo[] = [
@@ -73,7 +72,7 @@ export const HANDLES_DATA: MaterialInfo[] = [
     name: 'Cabo de Chifre de Cervo Natural',
     type: 'handle',
     badge: 'Exclusividade Rústica',
-    image: 'https://i.ibb.co/TxTmPysC/Gemini-Generated-Image-z6feeez6feeez6fe.png',
+    image: '/images/handles/handle-chifre-cervo.png',
     description: 'Cabo confeccionado em chifre de cervo natural, apresentando características únicas de textura, tonalidade e formato. Cada peça possui sua própria identidade, valorizando a exclusividade e o trabalho artesanal da cutelaria.',
     features: ['Textura e formato natural único', 'Aderência e ergonomia anatômica', '100% autêntico e artesanal']
   },
@@ -82,7 +81,7 @@ export const HANDLES_DATA: MaterialInfo[] = [
     name: 'Cabo de Resina Híbrida e Madeira',
     type: 'handle',
     badge: 'Design Híbrido Premium',
-    image: 'https://i.ibb.co/DPSBQ23F/Gemini-Generated-Image-qdhly1qdhly1qdhl.png',
+    image: '/images/handles/handle-resina-hibrida.png',
     description: 'Cabo produzido com madeira natural e resina híbrida, combinando os veios naturais da madeira com efeitos exclusivos da resina. Uma opção moderna, resistente e com acabamento premium.',
     features: ['Fusão de madeira nobre e resina', 'Alta durabilidade e impermeabilidade', 'Efeitos visuais exclusivos']
   },
@@ -91,7 +90,7 @@ export const HANDLES_DATA: MaterialInfo[] = [
     name: 'Cabo de Madeira Nobre',
     type: 'handle',
     badge: 'Nobreza Clássica',
-    image: 'https://i.ibb.co/GfhKWt8J/Gemini-Generated-Image-dv8jtldv8jtldv8j.png',
+    image: '/images/handles/handle-madeira-nobre.png',
     description: 'Cabo confeccionado em madeira nobre, valorizando os desenhos naturais dos veios, tonalidades e detalhes exclusivos da madeira. Material clássico que transmite elegância, resistência e sofisticação.',
     features: ['Desenhos e veios naturais', 'Acabamento acetinado e polido', 'Elegância e sofisticação atemporal']
   },
@@ -100,7 +99,7 @@ export const HANDLES_DATA: MaterialInfo[] = [
     name: 'Cabo de Chifre de Boi Polido',
     type: 'handle',
     badge: 'Tradição & Brilho',
-    image: 'https://i.ibb.co/GfRj6DcC/Gemini-Generated-Image-knk6srknk6srknk6.png',
+    image: '/images/handles/handle-chifre-boi.png',
     description: 'Cabo feito em chifre de boi natural polido, com acabamento liso e brilho característico. Apresenta padrões naturais únicos, trazendo rusticidade, tradição e personalidade à faca artesanal.',
     features: ['Chifre de boi natural selecionado', 'Brilho espelhado e toque suave', 'Tradição da cutelaria gaúcha']
   },
@@ -109,7 +108,7 @@ export const HANDLES_DATA: MaterialInfo[] = [
     name: 'Cabo de Canela e Osso de Ovelha',
     type: 'handle',
     badge: 'Combinação Exclusiva',
-    image: 'https://i.ibb.co/JWfc31xv/Gemini-Generated-Image-8x9ca28x9ca28x9c.png',
+    image: '/images/handles/handle-canela-osso.png',
     description: 'Cabo artesanal produzido com canela natural e osso de ovelha, criando uma combinação diferenciada de materiais naturais. Possui visual tradicional e exclusivo, valorizando a arte da cutelaria.',
     features: ['Combinação de canela e osso de ovelha', 'Visual rústico e refinado', 'Excelente resistência mecânica']
   },
@@ -118,7 +117,7 @@ export const HANDLES_DATA: MaterialInfo[] = [
     name: 'Cabo de Rabo de Tatu Natural',
     type: 'handle',
     badge: 'Material Raro',
-    image: 'https://i.ibb.co/gLJRSyxx/Gemini-Generated-Image-qhys3qqhys3qqhys.png',
+    image: '/images/handles/handle-rabo-tatu.png',
     description: 'Cabo confeccionado em rabo de tatu natural, um material raro e diferenciado na cutelaria artesanal. Sua textura única torna cada peça exclusiva, destacando o trabalho manual e a tradição.',
     features: ['Rabo de tatu natural legítimo', 'Textura anelada e firmeza na pega', 'Item raro de colecionador']
   }
@@ -138,18 +137,19 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     description: 'Desenvolvida para pescadores e amantes da cutelaria artesanal. Uma faca resistente, elegante e preparada para acompanhar você em qualquer aventura.',
     details: [
       'Gravação temática "PESCARIA"',
-      'Excelente resistência à corrosão',
-      'Cabo artesanal ergonômico',
-      'Peso balanceado',
-      'Bainha em couro legítimo',
+      'Aço inoxidável 420C',
+      'Acabamento polido espelhado',
+      'Cabo híbrido em resina e madeira',
+      'Alta retenção de fio e fácil afiação',
+      'Bainha artesanal em couro legítimo',
       'Certificado de autenticidade'
     ]
   },
   {
-    id: 'chef-premium-8',
-    title: 'Faca Chef Artesanal Premium 8"',
+    id: 'chef-hibrida-ouro-8',
+    title: 'Faca Chef Artesanal 8" Edição Especial',
     category: 'algumas',
-    categoryLabel: 'Faca Chef',
+    categoryLabel: 'Faca Chef Premium',
     steel: 'Aço Inox 420C',
     handle: 'Resina Premium Perolada com Detalhes Ornamentais em Metal',
     bladeLength: '8 polegadas (20 cm)',
@@ -158,19 +158,20 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     description: 'Elegância, precisão e sofisticação reunidas em uma única peça. Desenvolvida para quem busca desempenho profissional aliado a um acabamento artesanal de alto padrão.',
     details: [
       'Acabamento polido espelhado',
-      'Cabo artesanal premium',
-      'Excelente retenção de fio',
-      'Peso perfeitamente balanceado',
-      'Bainha em couro legítimo',
-      'Certificado de autenticidade'
+      'Cabo perolado exclusivo com detalhes ornamentais',
+      'Empunhadura ergonômica e anatômica',
+      'Equilíbrio perfeito entre lâmina e cabo',
+      'Geometria de corte profissional',
+      'Bainha em couro legítimo com passador de cinto',
+      'Garantia vitalícia'
     ]
   },
   {
-    id: 'chef-fosfatizada-8',
-    title: 'Faca Chef Artesanal Fosfatizada Premium 8"',
+    id: 'artesanal-fosfatizada-8',
+    title: 'Faca Artesanal 8" Cabo em Chifre de Cervo',
     category: 'algumas',
-    categoryLabel: 'Faca Fosfatizada',
-    steel: 'Aço Inox 420C Fosfatizado',
+    categoryLabel: 'Faca Rústica Forjada',
+    steel: 'Aço Carbono 5160',
     handle: 'Chifre de Cervo Natural',
     bladeLength: '8 polegadas (20 cm)',
     finish: 'escurecida',
@@ -179,10 +180,9 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     details: [
       'Acabamento fosfatizado',
       'Cabo em chifre de cervo natural',
-      'Excelente retenção de fio',
-      'Empunhadura ergonômica',
-      'Peso balanceado',
-      'Bainha artesanal em couro legítimo',
+      'Alta retenção de fio e poder de corte',
+      'Estrutura full tang para máxima resistência',
+      'Bainha em couro bovino costurada à mão',
       'Certificado de autenticidade'
     ]
   },
@@ -211,7 +211,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: 'pavao-artesanal-8',
     title: 'Faca Pavão Artesanal 8"',
     category: 'algumas',
-    categoryLabel: 'Faca Temática',
+    categoryLabel: 'Faca Especial',
     steel: 'Aço Inox 420C',
     handle: 'Resina Híbrida Premium com Madeira Natural',
     bladeLength: '8 polegadas (20 cm)',
@@ -220,10 +220,11 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     description: 'Desenvolvida para amantes da cutelaria artesanal. Uma faca resistente, elegante e preparada para acompanhar você em qualquer aventura.',
     details: [
       'Gravação temática "PAVÃO"',
-      'Excelente resistência à corrosão',
-      'Cabo artesanal ergonômico',
-      'Peso balanceado',
-      'Bainha em couro legítimo',
+      'Aço inoxidável 420C',
+      'Acabamento polido espelhado',
+      'Cabo híbrido de alta resistência',
+      'Empunhadura ergonômica',
+      'Bainha artesanal em couro legítimo',
       'Certificado de autenticidade'
     ]
   }

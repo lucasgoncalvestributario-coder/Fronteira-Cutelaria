@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { ForgeLoader } from './components/ForgeLoader';
 import { EmbersCanvas } from './components/EmbersCanvas';
 import { Navbar } from './components/Navbar';
+import { BrandTicker } from './components/BrandTicker';
 import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
 import { MaterialsSection } from './components/MaterialsSection';
-import { GallerySection } from './components/GallerySection';
 import { KnifeCareSection } from './components/KnifeCareSection';
 import { ShippingMapSection } from './components/ShippingMapSection';
 import { FaqSection } from './components/FaqSection';
@@ -28,11 +28,15 @@ export default function App() {
         {/* Navigation Bar */}
         <Navbar />
 
+        {/* Animated Brand Highlights Ribbon positioned strategically between menu and hero content */}
+        <div className="pt-20 sm:pt-24 bg-[#050505] relative z-30">
+          <BrandTicker />
+        </div>
+
         {/* Main Landing Page Sections */}
         <main>
           <HeroSection />
           <AboutSection />
-          <GallerySection />
           <MaterialsSection />
           <KnifeCareSection />
           <ShippingMapSection />

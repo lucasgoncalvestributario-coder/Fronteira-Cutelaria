@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Flame, Swords, ShieldCheck, MapPin, Sparkles } from 'lucide-react';
+import { ShieldCheck, Sparkles } from 'lucide-react';
 import { LOGO_URL, WHATSAPP_URL } from '../data/cutelariaData';
 import { WhatsAppIcon } from './WhatsAppIcon';
 
 export const HeroSection: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden bg-[#050505]">
+    <section className="relative min-h-[calc(100vh-80px)] flex items-center justify-center pt-8 sm:pt-12 pb-16 overflow-hidden bg-[#050505]">
       {/* Background Image / Atmospheric Overlay */}
       <div className="absolute inset-0 z-0">
         <img
@@ -20,20 +20,6 @@ export const HeroSection: React.FC = () => {
       </div>
 
       <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
-        {/* Location Tag */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#ff6a0044] bg-stone-950/80 backdrop-blur-md mb-6 shadow-[0_0_20px_rgba(255,106,0,0.2)]"
-        >
-          <MapPin size={14} className="text-[#ff6a00]" />
-          <span className="font-montserrat text-xs uppercase tracking-widest text-stone-300">
-            Camboriú - SC
-          </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#ff6a00] animate-ping ml-1" />
-        </motion.div>
-
         {/* Central Logo Display */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
