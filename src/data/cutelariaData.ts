@@ -1,4 +1,4 @@
-import { MaterialInfo, GalleryItem, ProcessStep, Testimonial, FaqItem } from '../types';
+import { MaterialInfo, KnifeProduct, GalleryItem, ProcessStep, Testimonial, FaqItem } from '../types';
 
 export const LOGO_URL = 'https://i.postimg.cc/G3jyNHMZ/Chat-GPT-Image-22-de-jul-de-2026-17-32-37.png';
 export const PHONE_NUMBER = '5547997374307';
@@ -63,6 +63,180 @@ export const STEELS_DATA: MaterialInfo[] = [
       'Marcas e textura exclusivas de forjamento'
     ],
     recommendedFor: 'Facas rústicas campeiras, uso pesado na lida do campo e colecionadores de peças com alma.'
+  },
+  {
+    id: 'mola-caminhao',
+    name: 'Aço de Mola de Caminhão',
+    type: 'steel',
+    badge: 'Resiliência & Tenacidade Máxima',
+    image: 'https://i.ibb.co/TDG4L76Y/Gemini-Generated-Image-ugdddougdddougdd.jpg',
+    description: 'Lâminas forjadas a partir de feixes de molas automotivas pesadas (liga SAE 5160). Consagrado na cutelaria pela resiliência superior, memória elástica e capacidade de suportar choques mecânicos violentos sem lascar.',
+    features: [
+      'Altíssima tenacidade e absorção de impactos pesados',
+      'Excelente memória elástica e flexibilidade estrutural',
+      'Retenção de fio vigorosa para serviços severos',
+      'Reaproveitamento artesanal de aços de alta liga'
+    ],
+    recommendedFor: 'Facas campeiras, facões de lida, cutelos pesados e ferramentas de campo que exigem corte e resistência extrema.'
+  },
+  {
+    id: 'aco-damasco',
+    name: 'Aço Damasco',
+    type: 'steel',
+    badge: 'Obra de Arte Multicamadas',
+    image: 'https://i.ibb.co/spwy9BJp/Gemini-Generated-Image-dvhxwfdvhxwfdvhx.jpg',
+    description: 'Aço nobre forjado pelo caldeamento manual e dobras sucessivas de dezenas a centenas de camadas de aços de diferentes teores (como 1095 e 15N20), revelando padrões orgânicos únicos e corte cirúrgico extraordinário.',
+    features: [
+      'Padrão visual único e exclusivo com centenas de camadas',
+      'Combinação de afiação navalha e corpo de alta tenacidade',
+      'Acabamento estético nobre de padrão internacional',
+      'Valorização histórica e prestígio de colecionador'
+    ],
+    recommendedFor: 'Facas de luxo, colecionadores exigentes, alta gastronomia, churrasco nobre e presentes comemorativos.'
+  }
+];
+
+export const STEEL_OPTIONS: string[] = [
+  'Aço Inox',
+  'Aço Carbono',
+  'Disco de Arado',
+  'Aço de Mola de Caminhão',
+  'Aço Damasco'
+];
+
+export const HANDLE_OPTIONS: string[] = [
+  'Cabo de Chifre de Cervo Natural',
+  'Cabo de Resina Híbrida e Madeira',
+  'Cabo de Madeira Nobre',
+  'Cabo de Chifre de Boi Polido',
+  'Cabo de Canela e Osso de Ovelha',
+  'Cabo de Rabo de Tatu Natural'
+];
+
+export const CATEGORY_OPTIONS: string[] = [
+  'Churrasco',
+  'Campeira',
+  'Bowie',
+  'Caça',
+  'Chef',
+  'Utilitária',
+  'Especial'
+];
+
+export const INITIAL_PRODUCTS: KnifeProduct[] = [
+  {
+    id: 'fc-101',
+    code: 'FC-101',
+    name: 'Faca Pescaria Artesanal 8"',
+    category: 'Especial',
+    steel: 'Aço Inox',
+    handle: 'Cabo de Resina Híbrida e Madeira',
+    bladeLength: '8 polegadas (20 cm)',
+    price: 490,
+    image: 'https://i.ibb.co/rKVmzKSp/Chat-GPT-Image-25-de-jul-de-2026-14-16-09.png',
+    images: [
+      'https://i.ibb.co/rKVmzKSp/Chat-GPT-Image-25-de-jul-de-2026-14-16-09.png',
+      'https://i.ibb.co/pjHN7mVy/Gemini-Generated-Image-vu8rxyvu8rxyvu8r.png'
+    ],
+    description: 'Desenvolvida especialmente para pescadores e amantes da cutelaria fina. Lâmina em aço inoxidável com resistência à umidade, dorso mosqueado e empunhadura anatômica.',
+    stockStatus: 'pronta-entrega',
+    stockQuantity: 4,
+    features: ['Gravação temática "PESCARIA"', 'Lâmina espelhada', 'Bainha em couro legítimo', 'Certificado assinado']
+  },
+  {
+    id: 'fc-102',
+    code: 'FC-102',
+    name: 'Faca Chef Artesanal 8" Edição Especial',
+    category: 'Chef',
+    steel: 'Aço Inox',
+    handle: 'Cabo de Madeira Nobre',
+    bladeLength: '8 polegadas (20 cm)',
+    price: 540,
+    image: 'https://i.ibb.co/S71qvNfQ/Chat-GPT-Image-25-de-jul-de-2026-14-13-59.png',
+    images: [
+      'https://i.ibb.co/S71qvNfQ/Chat-GPT-Image-25-de-jul-de-2026-14-13-59.png',
+      'https://i.ibb.co/pjHN7mVy/Gemini-Generated-Image-vu8rxyvu8rxyvu8r.png'
+    ],
+    description: 'Elegância, precisão e sofisticação reunidas para alta gastronomia e churrasco de elite. Geometria de corte refinada com balanceamento perfeito.',
+    stockStatus: 'pronta-entrega',
+    stockQuantity: 3,
+    features: ['Acabamento polido espelhado', 'Empunhadura ergonômica', 'Equilíbrio peso/fio', 'Garantia vitalícia de forja']
+  },
+  {
+    id: 'fc-103',
+    code: 'FC-103',
+    name: 'Faca Bowie Rústica Forjada 10"',
+    category: 'Bowie',
+    steel: 'Aço Carbono',
+    handle: 'Cabo de Chifre de Cervo Natural',
+    bladeLength: '10 polegadas (25 cm)',
+    price: 680,
+    image: 'https://i.ibb.co/JRb0VdxG/Chat-GPT-Image-25-de-jul-de-2026-14-15-00.png',
+    images: [
+      'https://i.ibb.co/JRb0VdxG/Chat-GPT-Image-25-de-jul-de-2026-14-15-00.png',
+      'https://i.ibb.co/TB8bt4jP/Gemini-Generated-Image-4rz0h54rz0h54rz0.png'
+    ],
+    description: 'Lâmina forjada no fogo e na bigorna em aço carbono de alto teor com têmpera seletiva. Acabamento escurecido/fosfatizado com retenção de fio cirúrgica.',
+    stockStatus: 'pronta-entrega',
+    stockQuantity: 2,
+    features: ['Tratamento térmico diferencial', 'Cabo em chifre de cervo legítimo', 'Espiga full tang reforçada', 'Bainha com passador']
+  },
+  {
+    id: 'fc-104',
+    code: 'FC-104',
+    name: 'Faca Campeira Gaúcha 9"',
+    category: 'Campeira',
+    steel: 'Disco de Arado',
+    handle: 'Cabo de Chifre de Boi Polido',
+    bladeLength: '9 polegadas (23 cm)',
+    price: 460,
+    image: 'https://i.ibb.co/LX0vrV96/Chat-GPT-Image-25-de-jul-de-2026-14-10-20.png',
+    images: [
+      'https://i.ibb.co/LX0vrV96/Chat-GPT-Image-25-de-jul-de-2026-14-10-20.png',
+      'https://i.ibb.co/mFtLvz9b/Gemini-Generated-Image-27o4ul27o4ul27o4.png'
+    ],
+    description: 'Tradição pura forjada a partir de antigo disco de arado agrícola. Uma lâmina resistente a qualquer lida, mantendo o charme rústico de um aço histórico.',
+    stockStatus: 'pronta-entrega',
+    stockQuantity: 5,
+    features: ['Aço mola de trator/arado', 'Textura rústica original', 'Cabo anatômico em chifre de boi', 'Acompanha bainha de couro']
+  },
+  {
+    id: 'fc-105',
+    code: 'FC-105',
+    name: 'Faca Campo & Lida 9" em Mola de Caminhão',
+    category: 'Campeira',
+    steel: 'Aço de Mola de Caminhão',
+    handle: 'Cabo de Canela e Osso de Ovelha',
+    bladeLength: '9 polegadas (23 cm)',
+    price: 520,
+    image: 'https://i.ibb.co/TDG4L76Y/Gemini-Generated-Image-ugdddougdddougdd.jpg',
+    images: [
+      'https://i.ibb.co/TDG4L76Y/Gemini-Generated-Image-ugdddougdddougdd.jpg',
+      'https://i.ibb.co/JRb0VdxG/Chat-GPT-Image-25-de-jul-de-2026-14-15-00.png'
+    ],
+    description: 'Forjada a partir de feixe de mola de caminhão com a lendária liga 5160. Resiste aos choques mecânicos mais severos, cortes brutos e tarefas pesadas no campo com elasticidade impecável.',
+    stockStatus: 'pronta-entrega',
+    stockQuantity: 3,
+    features: ['Liga 5160 de feixe de mola forjada', 'Tenacidade e memória elástica', 'Cabo artesanal em canela e osso', 'Certificado com garantia vitalícia']
+  },
+  {
+    id: 'fc-106',
+    code: 'FC-106',
+    name: 'Faca Churrasco Nobre 8.5" em Aço Damasco',
+    category: 'Churrasco',
+    steel: 'Aço Damasco',
+    handle: 'Cabo de Resina Híbrida e Madeira',
+    bladeLength: '8.5 polegadas (21.5 cm)',
+    price: 1190,
+    image: 'https://i.ibb.co/spwy9BJp/Gemini-Generated-Image-dvhxwfdvhxwfdvhx.jpg',
+    images: [
+      'https://i.ibb.co/spwy9BJp/Gemini-Generated-Image-dvhxwfdvhxwfdvhx.jpg',
+      'https://i.ibb.co/S71qvNfQ/Chat-GPT-Image-25-de-jul-de-2026-14-13-59.png'
+    ],
+    description: 'Peça de colecionador forjada pelo caldeamento de mais de 250 camadas de aços 1095 e 15N20. Desenho damasco hipnotizante com fio navalha de precisão absoluta.',
+    stockStatus: 'pronta-entrega',
+    stockQuantity: 2,
+    features: ['Mais de 250 camadas caldeadas', 'Padrão damasco autêntico', 'Cabo híbrido em resina perolada', 'Estojo de apresentação de luxo']
   }
 ];
 
@@ -374,8 +548,8 @@ export const FAQS: FaqItem[] = [
     category: 'manutencao'
   },
   {
-    question: 'Qual o melhor aço para minha necessidade: Inox, Carbono ou Disco de Arado?',
-    answer: 'Se você busca praticidade, baixa manutenção e brilho espelhado, escolha o Inox 420C. Se você prioriza retaining de fio cirúrgico e o ritual tradicional da cutelaria, vá de Carbono 1070. Se deseja uma peça robusta, com alma rústica e grande resistência a choques, o Disco de Arado é perfeito.',
+    question: 'Qual o melhor aço para minha necessidade: Inox, Carbono, Disco de Arado, Mola de Caminhão ou Damasco?',
+    answer: 'Se você busca praticidade, baixa manutenção e brilho espelhado, escolha o Inox 420C. Se você prioriza retenção de fio cirúrgico e a forja clássica, vá de Carbono 1070. Se procura robustez extrema e resistência a impactos pesados, o Disco de Arado ou o Aço de Mola de Caminhão são escolhas imbatíveis. E se você deseja o ápice do prestígio, nobreza e arte visual, o Aço Damasco multicamadas é a escolha definitiva.',
     category: 'materiais'
   },
   {

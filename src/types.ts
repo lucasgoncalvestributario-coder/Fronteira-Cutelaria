@@ -9,6 +9,24 @@ export interface MaterialInfo {
   badge?: string;
 }
 
+export interface KnifeProduct {
+  id: string;
+  code: string; // Código do produto (SKU)
+  name: string; // Nome do produto
+  category: string; // Categoria da faca
+  steel: string; // Material da lâmina
+  handle: string; // Material do cabo
+  bladeLength: string; // Tamanho
+  price: number; // Preço
+  image: string; // Imagem principal
+  images?: string[]; // Demais imagens
+  description: string; // Descrição
+  stockStatus: 'pronta-entrega' | 'sob-encomenda' | 'esgotado'; // Disponibilidade em estoque
+  stockQuantity: number; // Quantidade em estoque
+  features?: string[]; // Demais campos / diferenciais
+  featured?: boolean;
+}
+
 export interface GalleryItem {
   id: string;
   title: string;
