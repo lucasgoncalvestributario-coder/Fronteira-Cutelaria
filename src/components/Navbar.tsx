@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Flame, Volume2, VolumeX, ShieldCheck, Instagram } from 'lucide-react';
+import { Menu, X, Flame, ShieldCheck, Instagram } from 'lucide-react';
 import { LOGO_URL, WHATSAPP_URL, INSTAGRAM_URL } from '../data/cutelariaData';
-import { soundFX } from '../utils/soundEffects';
 import { WhatsAppIcon } from './WhatsAppIcon';
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,14 +14,6 @@ export const Navbar: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const toggleSound = () => {
-    soundFX.enabled = !soundEnabled;
-    setSoundEnabled(!soundEnabled);
-    if (!soundEnabled) {
-      soundFX.playBladeSheen();
-    }
-  };
 
   const navLinks = [
     { name: 'O Fundador', href: '#sobre' },
@@ -79,16 +69,8 @@ export const Navbar: React.FC = () => {
           ))}
         </nav>
 
-        {/* Right CTA & Sound Control */}
+        {/* Right CTA */}
         <div className="hidden sm:flex items-center gap-4">
-          <button
-            onClick={toggleSound}
-            title={soundEnabled ? 'Silenciar Áudio da Forja' : 'Ativar Efeitos de Áudio da Forja'}
-            className="p-2 rounded-full border border-stone-800 bg-stone-900/80 text-stone-400 hover:text-[#ff6a00] hover:border-[#ff6a0055] transition-all"
-          >
-            {soundEnabled ? <Volume2 size={18} className="text-[#ff6a00] animate-pulse" /> : <VolumeX size={18} />}
-          </button>
-
           <a
             href={WHATSAPP_URL}
             target="_blank"
@@ -101,17 +83,11 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Hamburger Button */}
-        <div className="flex sm:hidden items-center gap-2">
-          <button
-            onClick={toggleSound}
-            className="p-2 rounded-full border border-stone-800 bg-stone-900 text-stone-300"
-          >
-            {soundEnabled ? <Volume2 size={18} className="text-[#ff6a00]" /> : <VolumeX size={18} />}
-          </button>
-
+        <div className="flex sm:hidden items-center">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2.5 rounded-md border border-stone-800 bg-stone-900 text-stone-200 hover:text-[#ff6a00]"
+            aria-label={mobileMenuOpen ? 'Fechar menu' : 'Abrir menu de navegação'}
+            className="p-2.5 rounded-md border border-stone-800 bg-stone-900 text-stone-200 hover:text-[#ff6a00] focus:outline-none focus:ring-1 focus:ring-[#ff6a00]"
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>

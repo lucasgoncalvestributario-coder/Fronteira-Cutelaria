@@ -12,12 +12,12 @@ export const BrandTicker: React.FC = () => {
 
   return (
     <div 
-      className="relative w-full overflow-hidden bg-[#090706] border-y border-[#ff6a0033] py-2.5 sm:py-3 z-30 shadow-[0_2px_15px_rgba(0,0,0,0.6)] select-none"
+      className="relative w-full overflow-hidden bg-gradient-to-r from-[#170e09] via-[#24160e] to-[#170e09] border-y border-[#ff6a0040] py-2.5 sm:py-3.5 z-30 shadow-[0_4px_25px_rgba(255,106,0,0.12)] select-none"
       aria-label="Destaques Fronteira Cutelaria"
     >
       {/* Subtle edge fade vignettes for elegant entry and exit */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-16 bg-gradient-to-r from-[#090706] to-transparent z-10" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 sm:w-16 bg-gradient-to-l from-[#090706] to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-16 bg-gradient-to-r from-[#170e09] to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 sm:w-16 bg-gradient-to-l from-[#170e09] to-transparent z-10" />
 
       {/* Infinite Scrolling Track */}
       <div className="flex w-max animate-marquee-infinite">
@@ -27,10 +27,10 @@ export const BrandTicker: React.FC = () => {
             <React.Fragment key={`t1-${rep}`}>
               {PHRASES.map((phrase, idx) => (
                 <div key={`t1-${rep}-${idx}`} className="flex items-center">
-                  <span className="font-cinzel text-xs sm:text-sm font-bold tracking-[0.22em] text-[#f0dfc0] uppercase whitespace-nowrap">
+                  <span className="font-cinzel text-xs sm:text-sm font-bold tracking-[0.22em] text-[#fff0d6] uppercase whitespace-nowrap drop-shadow-[0_1px_8px_rgba(255,106,0,0.35)]">
                     {phrase}
                   </span>
-                  <span className="mx-4 sm:mx-6 text-[#ff6a00] text-sm select-none font-black" aria-hidden="true">
+                  <span className="mx-4 sm:mx-6 text-[#ff7700] text-sm select-none font-black drop-shadow-[0_0_8px_rgba(255,119,0,0.8)]" aria-hidden="true">
                     •
                   </span>
                 </div>
@@ -45,10 +45,10 @@ export const BrandTicker: React.FC = () => {
             <React.Fragment key={`t2-${rep}`}>
               {PHRASES.map((phrase, idx) => (
                 <div key={`t2-${rep}-${idx}`} className="flex items-center">
-                  <span className="font-cinzel text-xs sm:text-sm font-bold tracking-[0.22em] text-[#f0dfc0] uppercase whitespace-nowrap">
+                  <span className="font-cinzel text-xs sm:text-sm font-bold tracking-[0.22em] text-[#fff0d6] uppercase whitespace-nowrap drop-shadow-[0_1px_8px_rgba(255,106,0,0.35)]">
                     {phrase}
                   </span>
-                  <span className="mx-4 sm:mx-6 text-[#ff6a00] text-sm select-none font-black" aria-hidden="true">
+                  <span className="mx-4 sm:mx-6 text-[#ff7700] text-sm select-none font-black drop-shadow-[0_0_8px_rgba(255,119,0,0.8)]" aria-hidden="true">
                     •
                   </span>
                 </div>

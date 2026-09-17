@@ -27,15 +27,18 @@ export const KnifeCareSection: React.FC = () => {
   ];
 
   return (
-    <section id="cuidados" className="relative py-24 bg-[#050505]">
+    <section id="cuidados" className="relative py-24 bg-gradient-to-b from-[#0c0907] via-[#140e0a] to-[#0c0907] border-t border-b border-[#ff6a0026] overflow-hidden">
+      {/* Soft Ambient Warm Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(255,106,0,0.12),transparent_75%)] pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="font-cinzel text-3xl sm:text-5xl font-bold text-stone-100 uppercase tracking-tight mb-4">
-            Cuidados & <span className="text-[#ff6a00] text-lava-glow">Conservação</span>
+          <h2 className="font-cinzel text-3xl sm:text-5xl font-bold text-stone-100 uppercase tracking-tight mb-4 drop-shadow-sm">
+            Cuidados & <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4500] via-[#ff7a00] to-[#ffb700] text-lava-glow">Conservação</span>
           </h2>
 
-          <p className="font-montserrat text-stone-400 text-sm sm:text-base font-light">
+          <p className="font-montserrat text-stone-300 text-sm sm:text-base font-normal leading-relaxed">
             Sua faca artesanal foi projetada para durar a vida toda. Siga este guia prático para manter a lâmina com corte cirúrgico e brilho constante.
           </p>
         </div>
@@ -48,9 +51,9 @@ export const KnifeCareSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="p-6 rounded-sm bg-brushed-metal border border-stone-800 hover:border-[#ff6a0088] transition-all"
+              className="p-6 rounded-lg bg-[#17120e]/95 border border-[#ff6a0029] hover:border-[#ff6a0088] shadow-[0_4px_20px_rgba(0,0,0,0.6)] hover:shadow-[0_6px_30px_rgba(255,106,0,0.18)] hover:-translate-y-1 transition-all duration-300 backdrop-blur-sm"
             >
-              <div className="p-3 rounded-full bg-black/60 border border-stone-800 w-fit mb-4">
+              <div className="p-3.5 rounded-full bg-gradient-to-br from-[#24170e] to-[#120a06] border border-[#ff6a0044] shadow-[0_0_15px_rgba(255,106,0,0.2)] w-fit mb-4">
                 {tip.icon}
               </div>
 
@@ -58,7 +61,7 @@ export const KnifeCareSection: React.FC = () => {
                 {tip.title}
               </h3>
 
-              <p className="font-montserrat text-xs text-stone-400 font-light leading-relaxed">
+              <p className="font-montserrat text-xs text-stone-300 font-normal leading-relaxed">
                 {tip.desc}
               </p>
             </motion.div>

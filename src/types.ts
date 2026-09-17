@@ -53,6 +53,21 @@ export interface FaqItem {
   category: 'manutencao' | 'materiais' | 'personalizacao' | 'envio' | 'garantia';
 }
 
+export interface PromoBanner {
+  id: string;
+  title: string;
+  subtitle: string;
+  imageUrl: string;
+  imageWebp2560: string;
+  imageWebp1920: string;
+  imageWebp960: string;
+  imageJpg1920: string;
+  imageJpg960: string;
+  originalUrl: string;
+  ctaText: string;
+  whatsappMessage: string;
+}
+
 export interface CustomKnifeConfig {
   steel: string;
   bladeModel: string;
