@@ -6,7 +6,6 @@ import { PromoBannerCarousel } from './components/PromoBannerCarousel';
 import { BrandTicker } from './components/BrandTicker';
 import { HeroSection } from './components/HeroSection';
 import { MaterialsSection } from './components/MaterialsSection';
-import { ProductCatalogSection } from './components/ProductCatalogSection';
 import { KnifeCareSection } from './components/KnifeCareSection';
 import { ShippingMapSection } from './components/ShippingMapSection';
 import { FaqSection } from './components/FaqSection';
@@ -55,7 +54,6 @@ export default function App() {
         <main>
           <HeroSection />
           <MaterialsSection />
-          <ProductCatalogSection />
           <KnifeCareSection />
           <ShippingMapSection />
           <FaqSection />
