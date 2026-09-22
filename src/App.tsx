@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ForgeLoader } from './components/ForgeLoader';
 import { EmbersCanvas } from './components/EmbersCanvas';
 import { Navbar } from './components/Navbar';
@@ -6,14 +6,72 @@ import { PromoBannerCarousel } from './components/PromoBannerCarousel';
 import { BrandTicker } from './components/BrandTicker';
 import { HeroSection } from './components/HeroSection';
 import { MaterialsSection } from './components/MaterialsSection';
+import { ModelsTeaserSection } from './components/ModelsTeaserSection';
+import { CatalogGalleryView } from './components/CatalogGalleryView';
 import { KnifeCareSection } from './components/KnifeCareSection';
 import { ShippingMapSection } from './components/ShippingMapSection';
 import { FaqSection } from './components/FaqSection';
 import { FooterSection } from './components/FooterSection';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { GuidedChatbot } from './components/GuidedChatbot';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const [isCatalogOpen, setIsCatalogOpen] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.location.pathname.startsWith('/catalogo') || window.location.hash === '#catalogo';
+  });
+
+  // Handle browser back/forward buttons (popstate)
+  useEffect(() => {
+    const handlePopState = (e: PopStateEvent) => {
+      const isCatalog = 
+        window.location.pathname.startsWith('/catalogo') || 
+        window.location.hash === '#catalogo' ||
+        e.state?.view === 'catalog';
+
+      setIsCatalogOpen(isCatalog);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const handleOpenCatalog = () => {
+    try {
+      window.history.pushState({ view: 'catalog' }, '', '/catalogo');
+    } catch {
+      window.location.hash = '#catalogo';
+    }
+    setIsCatalogOpen(true);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const handleBackToHome = () => {
+    if (window.location.pathname.startsWith('/catalogo') || window.location.hash === '#catalogo') {
+      try {
+        window.history.back();
+      } catch {
+        // Fallback
+      }
+    }
+    
+    // Always guarantee return to home state smoothly
+    setTimeout(() => {
+      if (window.location.pathname.startsWith('/catalogo') || window.location.hash === '#catalogo') {
+        try {
+          window.history.replaceState({ view: 'home' }, '', '/');
+        } catch {
+          window.location.hash = '';
+        }
+      }
+      setIsCatalogOpen(false);
+      const teaserEl = document.getElementById('nossos-modelos');
+      if (teaserEl) {
+        teaserEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 40);
+  };
 
   return (
     <div className="relative bg-[#0c0907] text-stone-200 min-h-screen font-montserrat selection:bg-[#ff6a00] selection:text-black overflow-x-hidden">
@@ -34,38 +92,49 @@ export default function App() {
       {/* 2. Interactive Background Flame Sparks & Embers Canvas */}
       <EmbersCanvas density="medium" />
 
-      {/* Main Landing Page Content */}
-      <div className={`relative z-10 transition-opacity duration-1000 ${loading ? 'opacity-0' : 'opacity-100'}`}>
-        {/* 1. Cabeçalho do site (Navbar) */}
-        <Navbar />
-
-        {/* Top Highlight Section: Promo Banners Carousel + Brand Ticker */}
-        <div className="pt-20 sm:pt-24 bg-gradient-to-b from-[#0e0a07] via-[#0d0906] to-[#0c0907] relative z-20">
-          {/* 2. Carrossel de banners promocionais */}
-          <PromoBannerCarousel />
-
-          {/* 3. Tarja de frases em movimento (posicionada estrategicamente abaixo do carrossel) */}
-          <div className="mt-2 sm:mt-3">
-            <BrandTicker />
-          </div>
+      {/* DEDICATED CATALOG VIEW (Only rendered when user enters catalog) */}
+      {isCatalogOpen ? (
+        <div className="relative z-20 animate-fadeIn">
+          <CatalogGalleryView onBackToHome={handleBackToHome} />
         </div>
+      ) : (
+        /* Main Landing Page Content (ZERO knife images loaded before click) */
+        <div className={`relative z-10 transition-opacity duration-1000 ${loading ? 'opacity-0' : 'opacity-100'}`}>
+          {/* 1. Cabeçalho do site (Navbar) */}
+          <Navbar onOpenCatalog={handleOpenCatalog} />
 
-        {/* 4. Conteúdo do catálogo e demais seções já existentes */}
-        <main>
-          <HeroSection />
-          <MaterialsSection />
-          <KnifeCareSection />
-          <ShippingMapSection />
-          <FaqSection />
-        </main>
+          {/* Top Highlight Section: Promo Banners Carousel + Brand Ticker */}
+          <div className="pt-20 sm:pt-24 bg-gradient-to-b from-[#0e0a07] via-[#0d0906] to-[#0c0907] relative z-20">
+            {/* 2. Carrossel de banners promocionais */}
+            <PromoBannerCarousel />
 
-        {/* Footer */}
-        <FooterSection />
+            {/* 3. Tarja de frases em movimento (posicionada estrategicamente abaixo do carrossel) */}
+            <div className="mt-2 sm:mt-3">
+              <BrandTicker />
+            </div>
+          </div>
 
-        {/* Floating WhatsApp Quick Action */}
-        <FloatingWhatsApp />
-      </div>
+          {/* 4. Conteúdo do catálogo e demais seções */}
+          <main>
+            <HeroSection />
+            <MaterialsSection />
+            {/* Leve chamada para o catálogo - Nenhuma foto carregada nesta tela */}
+            <ModelsTeaserSection onOpenCatalog={handleOpenCatalog} />
+            <KnifeCareSection />
+            <ShippingMapSection />
+            <FaqSection />
+          </main>
+
+          {/* Footer */}
+          <FooterSection />
+
+          {/* Floating WhatsApp Quick Action */}
+          <FloatingWhatsApp />
+        </div>
+      )}
+
+      {/* Guided Chatbot Assistant (Interactive Preset Options - Always Accessible) */}
+      <GuidedChatbot onOpenCatalog={handleOpenCatalog} />
     </div>
   );
 }
-

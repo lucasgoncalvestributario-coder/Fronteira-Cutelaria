@@ -3,7 +3,11 @@ import { Menu, X, Flame, ShieldCheck, Instagram } from 'lucide-react';
 import { LOGO_URL, WHATSAPP_URL, INSTAGRAM_URL } from '../data/cutelariaData';
 import { WhatsAppIcon } from './WhatsAppIcon';
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  onOpenCatalog?: () => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ onOpenCatalog }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -18,6 +22,7 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { name: 'O Fundador', href: '#sobre' },
     { name: 'Materiais', href: '#materiais' },
+    { name: 'Nossos Modelos', href: '#nossos-modelos' },
     { name: 'Cuidados', href: '#cuidados' },
     { name: 'Loja Física', href: '#loja-fisica' },
     { name: 'Instagram', href: INSTAGRAM_URL, external: true },
@@ -55,18 +60,27 @@ export const Navbar: React.FC = () => {
 
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-7">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              target={link.external ? '_blank' : undefined}
-              rel={link.external ? 'noopener noreferrer' : undefined}
-              className="font-montserrat text-xs uppercase tracking-widest text-stone-300 hover:text-[#ff6a00] transition-colors relative py-1 flex items-center gap-1.5 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#ff6a00] hover:after:w-full after:transition-all after:duration-300"
-            >
-              {link.external && <Instagram size={14} className="text-[#ff6a00]" />}
-              <span>{link.name}</span>
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isCatalogLink = link.href === '#nossos-modelos' && Boolean(onOpenCatalog);
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
+                onClick={(e) => {
+                  if (isCatalogLink) {
+                    e.preventDefault();
+                    onOpenCatalog?.();
+                  }
+                }}
+                className="font-montserrat text-xs uppercase tracking-widest text-stone-300 hover:text-[#ff6a00] transition-colors relative py-1 flex items-center gap-1.5 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#ff6a00] hover:after:w-full after:transition-all after:duration-300"
+              >
+                {link.external && <Instagram size={14} className="text-[#ff6a00]" />}
+                <span>{link.name}</span>
+              </a>
+            );
+          })}
         </nav>
 
         {/* Right CTA */}
@@ -98,19 +112,28 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="lg:hidden bg-[#0a0a0a]/98 border-b border-[#ff6a0044] px-6 py-6 space-y-4 shadow-2xl animate-fadeIn">
           <div className="flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                target={link.external ? '_blank' : undefined}
-                rel={link.external ? 'noopener noreferrer' : undefined}
-                onClick={() => setMobileMenuOpen(false)}
-                className="font-montserrat text-sm uppercase tracking-wider text-stone-200 hover:text-[#ff6a00] py-2 border-b border-stone-800 flex items-center gap-2"
-              >
-                {link.external && <Instagram size={16} className="text-[#ff6a00]" />}
-                <span>{link.name}</span>
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isCatalogLink = link.href === '#nossos-modelos' && Boolean(onOpenCatalog);
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noopener noreferrer' : undefined}
+                  onClick={(e) => {
+                    setMobileMenuOpen(false);
+                    if (isCatalogLink) {
+                      e.preventDefault();
+                      onOpenCatalog?.();
+                    }
+                  }}
+                  className="font-montserrat text-sm uppercase tracking-wider text-stone-200 hover:text-[#ff6a00] py-2 border-b border-stone-800 flex items-center gap-2"
+                >
+                  {link.external && <Instagram size={16} className="text-[#ff6a00]" />}
+                  <span>{link.name}</span>
+                </a>
+              );
+            })}
           </div>
 
           <div className="pt-2">
