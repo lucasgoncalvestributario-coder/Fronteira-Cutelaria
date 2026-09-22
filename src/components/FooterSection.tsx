@@ -1,7 +1,8 @@
 import React from 'react';
 import { Flame, Instagram, MapPin, ShieldCheck, Heart } from 'lucide-react';
-import { LOGO_URL, WHATSAPP_URL, INSTAGRAM_URL, LOCATION_TEXT, PHONE_NUMBER_FORMATTED } from '../data/cutelariaData';
+import { LOGO_URL, WHATSAPP_URL, INSTAGRAM_URL, LOCATION_TEXT, PHONE_NUMBER_FORMATTED, BUSINESS_HOURS } from '../data/cutelariaData';
 import { WhatsAppIcon } from './WhatsAppIcon';
+import { Clock } from 'lucide-react';
 
 export const FooterSection: React.FC = () => {
   return (
@@ -33,8 +34,13 @@ export const FooterSection: React.FC = () => {
             </p>
 
             <div className="flex items-center gap-2 font-montserrat text-xs text-stone-300 pt-2">
-              <MapPin size={16} className="text-[#ff6a00]" />
+              <MapPin size={16} className="text-[#ff6a00] shrink-0" />
               <span>{LOCATION_TEXT}</span>
+            </div>
+
+            <div className="flex items-center gap-2 font-montserrat text-xs text-stone-300">
+              <Clock size={16} className="text-[#ff6a00] shrink-0" />
+              <span>Atendimento: {BUSINESS_HOURS}</span>
             </div>
           </div>
 

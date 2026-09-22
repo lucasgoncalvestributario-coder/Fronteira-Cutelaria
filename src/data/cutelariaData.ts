@@ -7,6 +7,7 @@ export const WHATSAPP_URL = `https://wa.me/${PHONE_NUMBER}?text=${encodeURICompo
 export const WHATSAPP_CUSTOM_QUOTE_URL = (text: string) => `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(text)}`;
 export const INSTAGRAM_URL = 'https://instagram.com/fronteiracutelaria';
 export const LOCATION_TEXT = 'Avenida Minas Gerais, 305 - Anexo ao Posto Ipiranga, Camboriú - SC';
+export const BUSINESS_HOURS = '09h às 12h e das 13h30 às 22h';
 export const FOUNDER_VIDEO_URL = '/video-vagner.mp4';
 export const FOUNDER_YOUTUBE_URL = 'https://youtu.be/8yJU1_7AuZM';
 

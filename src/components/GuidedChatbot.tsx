@@ -884,7 +884,7 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
               handleSelectOption(
                 'Onde fica a loja?',
                 'ANS_ONDE_FICA',
-                'Nossa cutelaria e loja física fica na Rua Santa Cecília, 235 - Areias, Camboriú - SC (a minutos de Balneário Camboriú). Será um prazer receber você para conhecer a nossa fábrica!'
+                'Nossa cutelaria e loja física fica na Avenida Minas Gerais, 305 - Anexo ao Posto Ipiranga, Camboriú - SC. Será um prazer receber você para conhecer a nossa fábrica!'
               );
             }}
             className="chat-panel-btn"
@@ -902,7 +902,7 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
               handleSelectOption(
                 'Qual o horário de atendimento?',
                 'ANS_HORARIO',
-                'Atendimento presencial na fábrica de Segunda a Sexta das 08h às 18h e aos Sábados das 08h às 12h. Nosso WhatsApp de fábrica atende diariamente.'
+                'Nosso horário de atendimento é das 09h às 12h e das 13h30 às 22h. Atendemos presencialmente na fábrica e também pelo WhatsApp!'
               );
             }}
             className="chat-panel-btn"

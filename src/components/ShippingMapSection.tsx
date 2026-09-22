@@ -275,8 +275,8 @@ export const ShippingMapSection: React.FC = () => {
                     <p className="font-montserrat text-xs text-[#ff6a00] font-bold mt-0.5">
                       Avenida Minas Gerais, 305 - Anexo ao Posto Ipiranga
                     </p>
-                    <p className="font-montserrat text-[11px] text-stone-400">
-                      Camboriú - SC
+                    <p className="font-montserrat text-[11px] text-stone-300 mt-0.5">
+                      Camboriú - SC • <span className="text-[#ff6a00] font-semibold">Atendimento: 09h às 12h e 13h30 às 22h</span>
                     </p>
                   </div>
                 </div>
