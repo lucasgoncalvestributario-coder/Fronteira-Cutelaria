@@ -64,6 +64,7 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState<MenuStep>('MAIN_MENU');
   const [previousCategory, setPreviousCategory] = useState<MenuStep>('MAIN_MENU');
+  const [lastUserTopic, setLastUserTopic] = useState<string>('');
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome',
@@ -116,10 +117,130 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
     }
   };
 
-  // Open WhatsApp helper
-  const openWhatsAppWithTopic = (topic: string) => {
-    const text = `Olá! Estive no atendimento do site da Fronteira Cutelaria com uma dúvida sobre: ${topic}. Gostaria de falar com a fábrica.`;
-    window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
+  // Open WhatsApp with a message based strictly on the user's specific request/order in the chatbot
+  const openWhatsAppWithTopic = (explicitTopic?: string) => {
+    let messageText = '';
+    const effectiveTopic = explicitTopic || lastUserTopic || currentStep;
+
+    switch (effectiveTopic) {
+      // 1. Facas e Catálogo
+      case 'Ver nossas facas':
+      case 'Ver catálogo de facas':
+      case 'CAT_FACAS':
+      case 'ANS_VER_CATALOGO':
+        messageText = 'Olá! Estive vendo os modelos no site da Fronteira Cutelaria e gostaria de fazer o pedido de uma faca.';
+        break;
+
+      case 'As facas estão disponíveis?':
+      case 'ANS_DISPONIBILIDADE':
+        messageText = 'Olá! Gostaria de saber quais modelos de facas artesanais estão disponíveis para pronta entrega hoje na Fronteira Cutelaria.';
+        break;
+
+      case 'Quero saber o preço':
+      case 'ANS_PRECO':
+        messageText = 'Olá! Gostaria de receber os modelos e valores das facas artesanais disponíveis para compra na Fronteira Cutelaria.';
+        break;
+
+      // 2. Personalizadas
+      case 'Facas personalizadas':
+      case 'Vocês fazem facas sob medida?':
+      case 'CAT_PERSONALIZADAS':
+      case 'ANS_SOB_MEDIDA':
+        messageText = 'Olá! Gostaria de fazer o pedido de uma faca artesanal sob medida personalizada com a fábrica.';
+        break;
+
+      case 'Posso personalizar com nome ou marca?':
+      case 'ANS_NOME_MARCA':
+        messageText = 'Olá! Gostaria de encomendar uma faca personalizada com gravação do meu nome/marca.';
+        break;
+
+      case 'Posso enviar uma foto de referência?':
+      case 'ANS_FOTO_REFERENCIA':
+        messageText = 'Olá! Gostaria de encomendar uma faca sob medida e tenho uma foto de referência para enviar.';
+        break;
+
+      case 'Quero solicitar um orçamento':
+      case 'Orçamento de Faca Personalizada':
+      case 'Orçamento de faca personalizada':
+      case 'ANS_SOLICITAR_ORCAMENTO':
+      case 'ANS_ORC_PERSONALIZADA':
+        messageText = 'Olá! Gostaria de solicitar um orçamento para uma faca artesanal personalizada sob medida.';
+        break;
+
+      // 3. Orçamentos
+      case 'Quero um orçamento':
+      case 'CAT_ORCAMENTO':
+        messageText = 'Olá! Gostaria de solicitar um orçamento de faca artesanal com a fábrica.';
+        break;
+
+      case 'Orçamento para empresas':
+      case 'ANS_ORC_EMPRESAS':
+        messageText = 'Olá! Gostaria de solicitar um orçamento de facas personalizadas para empresas/brindes corporativos.';
+        break;
+
+      case 'Orçamento para várias peças':
+      case 'ANS_ORC_VARIAS':
+        messageText = 'Olá! Gostaria de solicitar um orçamento para compra em lote de facas artesanais.';
+        break;
+
+      // 4. Serviços de Cutelaria
+      case 'Serviços da cutelaria':
+      case 'CAT_SERVICOS':
+        messageText = 'Olá! Gostaria de contratar serviços de cutelaria artesanal com a fábrica.';
+        break;
+
+      case 'Afiação':
+      case 'ANS_AFIACAO':
+        messageText = 'Olá! Gostaria de solicitar o serviço de afiação profissional para minhas facas.';
+        break;
+
+      case 'Restauração':
+      case 'ANS_RESTAURACAO':
+        messageText = 'Olá! Gostaria de solicitar uma restauração de peça/faca antiga com a cutelaria.';
+        break;
+
+      case 'Bainhas':
+      case 'ANS_BAINHAS':
+        messageText = 'Olá! Gostaria de encomendar uma bainha sob medida em couro legítimo.';
+        break;
+
+      case 'Personalização':
+      case 'ANS_CUSTOM_LASER':
+        messageText = 'Olá! Gostaria de encomendar uma personalização/gravação a laser em faca.';
+        break;
+
+      // 5. Sobre a Fronteira
+      case 'Sobre a Fronteira':
+      case 'Vocês são fabricantes?':
+      case 'Onde as facas são produzidas?':
+      case 'Quais tipos de trabalho vocês fazem?':
+      case 'CAT_SOBRE':
+      case 'ANS_FABRICANTES':
+      case 'ANS_ONDE_PRODUZIDAS':
+      case 'ANS_TIPOS_TRABALHO':
+        messageText = 'Olá! Gostei muito das peças de fabricação própria da Fronteira Cutelaria e gostaria de fazer um pedido.';
+        break;
+
+      // 6. Localização e Horário
+      case 'Localização e horário':
+      case 'Onde fica a loja?':
+      case 'Qual o horário de atendimento?':
+      case 'CAT_LOCALIZACAO':
+      case 'ANS_ONDE_FICA':
+      case 'ANS_HORARIO':
+        messageText = 'Olá! Gostaria de informações para visitar a fábrica e loja física da Fronteira Cutelaria em Camboriú/SC.';
+        break;
+
+      // 7. Falar com a fábrica (geral)
+      case 'Falar com a fábrica':
+      case 'Atendimento Direto com o Cuteleiro':
+      case 'CAT_FALAR_FABRICA':
+      default:
+        messageText = 'Olá! Gostaria de falar com o cuteleiro da Fronteira Cutelaria sobre os modelos e pedidos.';
+        break;
+    }
+
+    window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(messageText)}`, '_blank');
   };
 
   // Transition handler
@@ -129,6 +250,9 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
     botAnswer?: string,
     actionButton?: ChatMessage['actionButton']
   ) => {
+    // Save last user action to contextualize WhatsApp messages
+    setLastUserTopic(userText);
+
     // 1. Add User Choice message
     const userMsgId = 'user-' + Date.now();
     setMessages((prev) => [
@@ -809,7 +933,7 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
           <button
             type="button"
             onClick={() => {
-              openWhatsAppWithTopic('Atendimento Direto com o Cuteleiro');
+              openWhatsAppWithTopic();
             }}
             className="chat-panel-btn bg-[#25D366] hover:bg-[#20ba59] text-black font-black border-[#25D366] shadow-[0_0_20px_rgba(37,211,102,0.35)]"
           >
@@ -862,7 +986,7 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
 
         <button
           type="button"
-          onClick={() => openWhatsAppWithTopic('Atendimento de Fábrica')}
+          onClick={() => openWhatsAppWithTopic()}
           className="chat-panel-btn border-[#25D366]/40 hover:border-[#25D366] bg-[#0f1712]/70 hover:bg-[#142318] text-[#25D366] group"
         >
           <span className="flex items-center gap-3">
