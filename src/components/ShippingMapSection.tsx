@@ -7,7 +7,7 @@ const STORE_PHOTOS = [
     url: '/images/loja/foto-loja-1.avif',
     fallbackUrl: 'https://i.ibb.co/CspSjjhq/IMG-0806.avif',
     title: 'Loja Física & Showroom em Camboriú',
-    subtitle: 'Avenida Minas Gerais, 305 - Anexo ao Posto Ipiranga, Camboriú - SC'
+    subtitle: 'Avenida Minas Gerais, 305 - Anexo ao Posto Irmãos da Estrada, Camboriú - SC'
   },
   {
     url: '/images/loja/foto-loja-2.avif',
@@ -94,7 +94,7 @@ export const ShippingMapSection: React.FC = () => {
 
               <p className="font-montserrat text-stone-300 text-xs sm:text-sm tracking-widest uppercase font-semibold mt-1.5 flex items-center gap-1.5">
                 <MapPin size={16} className="text-[#ff6a00] shrink-0" />
-                <span>Avenida Minas Gerais, 305 - Anexo ao Posto Ipiranga, Camboriú - SC</span>
+                <span>Avenida Minas Gerais, 305 - Anexo ao Posto Irmãos da Estrada, Camboriú - SC</span>
               </p>
             </div>
 
@@ -273,7 +273,7 @@ export const ShippingMapSection: React.FC = () => {
                       Loja Física e Fábrica
                     </h4>
                     <p className="font-montserrat text-xs text-[#ff6a00] font-bold mt-0.5">
-                      Avenida Minas Gerais, 305 - Anexo ao Posto Ipiranga
+                      Avenida Minas Gerais, 305 - Anexo ao Posto Irmãos da Estrada
                     </p>
                     <p className="font-montserrat text-[11px] text-stone-300 mt-0.5">
                       Camboriú - SC • <span className="text-[#ff6a00] font-semibold">Atendimento: 09h às 12h e 13h30 às 22h</span>

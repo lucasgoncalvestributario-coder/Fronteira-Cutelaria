@@ -884,7 +884,7 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
               handleSelectOption(
                 'Onde fica a loja?',
                 'ANS_ONDE_FICA',
-                'Nossa cutelaria e loja física fica na Avenida Minas Gerais, 305 - Anexo ao Posto Ipiranga, Camboriú - SC. Será um prazer receber você para conhecer a nossa fábrica!'
+                'Nossa cutelaria e loja física fica na Avenida Minas Gerais, 305 - Anexo ao Posto Irmãos da Estrada, Camboriú - SC. Será um prazer receber você para conhecer a nossa fábrica!'
               );
             }}
             className="chat-panel-btn"
