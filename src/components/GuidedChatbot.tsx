@@ -2,20 +2,16 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   MessageSquare, 
-  X, 
   ChevronRight, 
   RotateCcw, 
   Flame, 
   HelpCircle,
   ExternalLink,
-  ShieldCheck,
-  MapPin,
-  Clock,
-  Sparkles,
-  Scissors
+  ArrowLeft
 } from 'lucide-react';
-import { LOGO_URL, WHATSAPP_URL, PHONE_NUMBER } from '../data/cutelariaData';
+import { LOGO_URL, PHONE_NUMBER } from '../data/cutelariaData';
 import { WhatsAppIcon } from './WhatsAppIcon';
+import { BoyWithHatAvatar } from './BoyWithHatAvatar';
 
 interface GuidedChatbotProps {
   onOpenCatalog?: () => void;
@@ -76,25 +72,9 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
     }
   ]);
   const [isTyping, setIsTyping] = useState(false);
-  const [touchStartY, setTouchStartY] = useState<number | null>(null);
   const chatScrollRef = useRef<HTMLDivElement | null>(null);
 
-  // Handle touch swipe-down on top bar
-  const handleTopBarTouchStart = (e: React.TouchEvent) => {
-    setTouchStartY(e.touches[0].clientY);
-  };
-
-  const handleTopBarTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartY === null) return;
-    const currentY = e.changedTouches[0].clientY;
-    const diffY = currentY - touchStartY;
-    if (diffY > 60) {
-      setIsOpen(false);
-    }
-    setTouchStartY(null);
-  };
-
-  // Auto-scroll chat to bottom
+  // Auto-scroll chat to latest message smoothly without moving the fixed options panel
   const scrollToBottom = () => {
     if (chatScrollRef.current) {
       chatScrollRef.current.scrollTo({
@@ -107,6 +87,34 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping, currentStep]);
+
+  // Support mobile back gesture to close full-screen chatbot
+  useEffect(() => {
+    const handlePopState = () => {
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [isOpen]);
+
+  const handleOpenChat = () => {
+    try {
+      window.history.pushState({ modal: 'chatbot' }, '', window.location.href);
+    } catch {
+      // fallback
+    }
+    setIsOpen(true);
+  };
+
+  const handleCloseChat = () => {
+    if (window.history.state?.modal === 'chatbot') {
+      window.history.back();
+    } else {
+      setIsOpen(false);
+    }
+  };
 
   // Open WhatsApp helper
   const openWhatsAppWithTopic = (topic: string) => {
@@ -175,12 +183,12 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
     }
   };
 
-  // Renders the available buttons for the current menu state
+  // Renders the available buttons for the current menu state (100% PRESERVED TEXTS)
   const renderOptionButtons = () => {
     // 1. MENU PRINCIPAL
     if (currentStep === 'MAIN_MENU') {
       return (
-        <div className="flex flex-col gap-2 pt-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <button
             type="button"
             onClick={() => {
@@ -191,10 +199,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'O que você gostaria de saber sobre as nossas facas?'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn group"
           >
-            <span>🔪 Ver nossas facas</span>
-            <ChevronRight size={14} className="text-[#ff6a00]" />
+            <span className="flex items-center gap-2">
+              <span className="text-base">🔪</span>
+              <span className="font-semibold text-stone-100 group-hover:text-white">Ver nossas facas</span>
+            </span>
+            <ChevronRight size={16} className="text-[#ff6a00] group-hover:translate-x-0.5 transition-transform" />
           </button>
 
           <button
@@ -207,10 +218,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Somos especialistas em cutelaria sob medida. O que você gostaria de saber?'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn group"
           >
-            <span>⚡ Facas personalizadas</span>
-            <ChevronRight size={14} className="text-[#ff6a00]" />
+            <span className="flex items-center gap-2">
+              <span className="text-base">⚡</span>
+              <span className="font-semibold text-stone-100 group-hover:text-white">Facas personalizadas</span>
+            </span>
+            <ChevronRight size={16} className="text-[#ff6a00] group-hover:translate-x-0.5 transition-transform" />
           </button>
 
           <button
@@ -223,10 +237,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Qual tipo de orçamento você procura para a sua faca artesanal?'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn group"
           >
-            <span>📋 Quero um orçamento</span>
-            <ChevronRight size={14} className="text-[#ff6a00]" />
+            <span className="flex items-center gap-2">
+              <span className="text-base">📋</span>
+              <span className="font-semibold text-stone-100 group-hover:text-white">Quero um orçamento</span>
+            </span>
+            <ChevronRight size={16} className="text-[#ff6a00] group-hover:translate-x-0.5 transition-transform" />
           </button>
 
           <button
@@ -239,10 +256,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Além da forja de novas facas, oferecemos serviços especializados. Qual serviço você precisa?'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn group"
           >
-            <span>🛠️ Serviços da cutelaria</span>
-            <ChevronRight size={14} className="text-[#ff6a00]" />
+            <span className="flex items-center gap-2">
+              <span className="text-base">🛠️</span>
+              <span className="font-semibold text-stone-100 group-hover:text-white">Serviços da cutelaria</span>
+            </span>
+            <ChevronRight size={16} className="text-[#ff6a00] group-hover:translate-x-0.5 transition-transform" />
           </button>
 
           <button
@@ -255,10 +275,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Conheça a história e o trabalho autêntico da Fronteira Cutelaria:'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn group"
           >
-            <span>🔥 Sobre a Fronteira</span>
-            <ChevronRight size={14} className="text-[#ff6a00]" />
+            <span className="flex items-center gap-2">
+              <span className="text-base">🔥</span>
+              <span className="font-semibold text-stone-100 group-hover:text-white">Sobre a Fronteira</span>
+            </span>
+            <ChevronRight size={16} className="text-[#ff6a00] group-hover:translate-x-0.5 transition-transform" />
           </button>
 
           <button
@@ -271,10 +294,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Fique à vontade para nos visitar em Camboriú/SC. O que deseja consultar?'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn group"
           >
-            <span>📍 Localização e horário</span>
-            <ChevronRight size={14} className="text-[#ff6a00]" />
+            <span className="flex items-center gap-2">
+              <span className="text-base">📍</span>
+              <span className="font-semibold text-stone-100 group-hover:text-white">Localização e horário</span>
+            </span>
+            <ChevronRight size={16} className="text-[#ff6a00] group-hover:translate-x-0.5 transition-transform" />
           </button>
 
           <button
@@ -287,13 +313,17 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Nosso cuteleiro e equipe atendem você diretamente no WhatsApp oficial da fábrica:'
               );
             }}
-            className="chat-option-btn border-[#25D366]/40 hover:border-[#25D366] text-[#25D366]"
+            className="chat-panel-btn border-[#25D366]/40 hover:border-[#25D366] bg-[#0f1712]/70 hover:bg-[#142318] text-[#25D366] sm:col-span-2 group"
           >
-            <span className="flex items-center gap-2">
-              <WhatsAppIcon size={14} color="#25D366" />
-              <span>Falar com a fábrica</span>
+            <span className="flex items-center gap-3">
+              <span className="w-7 h-7 rounded-lg bg-[#25D366] flex items-center justify-center shadow-xs flex-shrink-0">
+                <WhatsAppIcon size={16} color="#ffffff" />
+              </span>
+              <span className="font-bold text-[#25D366] group-hover:text-white transition-colors">
+                Falar com a fábrica
+              </span>
             </span>
-            <ChevronRight size={14} className="text-[#25D366]" />
+            <ChevronRight size={16} className="text-[#25D366] group-hover:translate-x-0.5 transition-transform" />
           </button>
         </div>
       );
@@ -302,7 +332,7 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
     // 2. CATEGORIA: VER NOSSAS FACAS
     if (currentStep === 'CAT_FACAS') {
       return (
-        <div className="flex flex-col gap-2 pt-2">
+        <div className="flex flex-col gap-2.5">
           <button
             type="button"
             onClick={() => {
@@ -313,17 +343,20 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 {
                   label: 'ABRIR CATÁLOGO DE FACAS',
                   action: () => {
-                    setIsOpen(false);
+                    handleCloseChat();
                     onOpenCatalog?.();
                   },
                   icon: 'catalog'
                 }
               );
             }}
-            className="chat-option-btn text-[#ff6a00] border-[#ff6a00]/40 font-bold"
+            className="chat-panel-btn text-[#ff6a00] border-[#ff6a00]/50 font-bold bg-[#1f1712]"
           >
-            <span>📖 Ver catálogo de facas</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>📖</span>
+              <span>Ver catálogo de facas</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -335,10 +368,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Como produzimos artesanalmente em Camboriú/SC, temos facas para pronta entrega na loja física e produzimos modelos sob encomenda com prazos rápidos. Fale com a fábrica para ver as peças disponíveis hoje!'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>📦 As facas estão disponíveis?</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>📦</span>
+              <span>As facas estão disponíveis?</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -350,18 +386,21 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Os valores das nossas facas variam de acordo com o tipo de aço (Inox 420C, Aço Carbono, Disco de Arado ou Aço Damasco), dimensões da lâmina, empunhadura e personalizações. Entre em contato para receber o catálogo com valores atualizados.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>💰 Quero saber o preço</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>💰</span>
+              <span>Quero saber o preço</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
             type="button"
             onClick={handleResetToMainMenu}
-            className="chat-option-btn-secondary"
+            className="chat-panel-btn-secondary"
           >
-            <RotateCcw size={12} />
+            <RotateCcw size={14} />
             <span>Voltar ao menu principal</span>
           </button>
         </div>
@@ -371,7 +410,7 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
     // 3. CATEGORIA: FACAS PERSONALIZADAS
     if (currentStep === 'CAT_PERSONALIZADAS') {
       return (
-        <div className="flex flex-col gap-2 pt-2">
+        <div className="flex flex-col gap-2.5">
           <button
             type="button"
             onClick={() => {
@@ -381,10 +420,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Sim! Somos fabricantes com oficina própria e a cutelaria sob medida é o coração do nosso trabalho. Você pode escolher comprimento da lâmina, espessura, tipo de aço, dorso mosqueado, cabos de madeiras nobres ou resina híbrida e estilo de bainha.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>📏 Vocês fazem facas sob medida?</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>📏</span>
+              <span>Vocês fazem facas sob medida?</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -396,10 +438,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Sim! Gravamos com precisão a laser ou em baixo relevo: seu nome, marca de fazenda, logo de empresa, brasão familiar ou dedicatória personalizada.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>✍️ Posso personalizar com nome ou marca?</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>✍️</span>
+              <span>Posso personalizar com nome ou marca?</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -411,10 +456,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Com certeza! Você pode nos enviar uma foto de referência no WhatsApp. Nossa equipe avalia a viabilidade da forja, indica os melhores materiais e produz a sua peça.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>📸 Posso enviar uma foto de referência?</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>📸</span>
+              <span>Posso enviar uma foto de referência?</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -431,18 +479,21 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 }
               );
             }}
-            className="chat-option-btn text-[#ff6a00] border-[#ff6a00]/40 font-bold"
+            className="chat-panel-btn text-[#ff6a00] border-[#ff6a00]/50 font-bold bg-[#1f1712]"
           >
-            <span>📝 Quero solicitar um orçamento</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>📝</span>
+              <span>Quero solicitar um orçamento</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
             type="button"
             onClick={handleResetToMainMenu}
-            className="chat-option-btn-secondary"
+            className="chat-panel-btn-secondary"
           >
-            <RotateCcw size={12} />
+            <RotateCcw size={14} />
             <span>Voltar ao menu principal</span>
           </button>
         </div>
@@ -452,7 +503,7 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
     // 4. CATEGORIA: QUERO UM ORÇAMENTO
     if (currentStep === 'CAT_ORCAMENTO') {
       return (
-        <div className="flex flex-col gap-2 pt-2">
+        <div className="flex flex-col gap-2.5">
           <button
             type="button"
             onClick={() => {
@@ -462,10 +513,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Para cotar sua faca sob medida, envie o modelo desejado, dimensões e se deseja gravação de nome. Atendemos você direto no WhatsApp da fábrica com todo o detalhamento.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>🔪 Orçamento de faca personalizada</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>🔪</span>
+              <span>Orçamento de faca personalizada</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -477,10 +531,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Produzimos kits de facas corporativas e brindes executivos de alto padrão com a marca da sua empresa gravada a laser. Condições especiais para pedidos institucionais.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>🏢 Orçamento para empresas</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>🏢</span>
+              <span>Orçamento para empresas</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -492,10 +549,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Para compras em lote (churrascadas, eventos, presentes para grupos e famílias), oferecemos condições diferenciadas de fábrica. Fale conosco no WhatsApp.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>📦 Orçamento para várias peças</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>📦</span>
+              <span>Orçamento para várias peças</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -507,21 +567,25 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Clique abaixo para conversar diretamente com o cuteleiro da Fronteira Cutelaria no WhatsApp:'
               );
             }}
-            className="chat-option-btn text-[#25D366] border-[#25D366]/40"
+            className="chat-panel-btn border-[#25D366]/40 hover:border-[#25D366] bg-[#0f1712]/70 hover:bg-[#142318] text-[#25D366] group"
           >
-            <span className="flex items-center gap-2">
-              <WhatsAppIcon size={14} color="#25D366" />
-              <span>Falar com a fábrica</span>
+            <span className="flex items-center gap-3">
+              <span className="w-7 h-7 rounded-lg bg-[#25D366] flex items-center justify-center shadow-xs flex-shrink-0">
+                <WhatsAppIcon size={16} color="#ffffff" />
+              </span>
+              <span className="font-bold text-[#25D366] group-hover:text-white transition-colors">
+                Falar com a fábrica
+              </span>
             </span>
-            <ChevronRight size={14} />
+            <ChevronRight size={16} className="text-[#25D366] group-hover:translate-x-0.5 transition-transform" />
           </button>
 
           <button
             type="button"
             onClick={handleResetToMainMenu}
-            className="chat-option-btn-secondary"
+            className="chat-panel-btn-secondary"
           >
-            <RotateCcw size={12} />
+            <RotateCcw size={14} />
             <span>Voltar ao menu principal</span>
           </button>
         </div>
@@ -531,7 +595,7 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
     // 5. CATEGORIA: SERVIÇOS DA CUTELARIA
     if (currentStep === 'CAT_SERVICOS') {
       return (
-        <div className="flex flex-col gap-2 pt-2">
+        <div className="flex flex-col gap-2.5">
           <button
             type="button"
             onClick={() => {
@@ -541,10 +605,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Realizamos afiação profissional com correção de geometria e acabamento em navalha. Sua faca volta a cortar como no primeiro dia.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>✨ Afiação</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>✨</span>
+              <span>Afiação</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -556,10 +623,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Restauramos peças antigas de família, facas de disco de arado oxidadas, fazemos troca de cabos de madeira ou resina e polimento da lâmina.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>🔨 Restauração</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>🔨</span>
+              <span>Restauração</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -571,10 +641,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Confeccionamos bainhas sob medida em couro bovino legítimo com costura manual reforçada e acabamento artesanal de alto padrão.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>🛡️ Bainhas</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>🛡️</span>
+              <span>Bainhas</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -586,18 +659,21 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Fazemos gravação a laser personalizada de nomes, datas, marcas e logos em qualquer lâmina ou cabo.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>✒️ Personalização</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>✒️</span>
+              <span>Personalização</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
             type="button"
             onClick={handleResetToMainMenu}
-            className="chat-option-btn-secondary"
+            className="chat-panel-btn-secondary"
           >
-            <RotateCcw size={12} />
+            <RotateCcw size={14} />
             <span>Voltar ao menu principal</span>
           </button>
         </div>
@@ -607,7 +683,7 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
     // 6. CATEGORIA: SOBRE A FRONTEIRA
     if (currentStep === 'CAT_SOBRE') {
       return (
-        <div className="flex flex-col gap-2 pt-2">
+        <div className="flex flex-col gap-2.5">
           <button
             type="button"
             onClick={() => {
@@ -617,10 +693,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Sim! Somos fabricantes com oficina e forja própria. Todas as peças que você vê em nosso acervo foram feitas em nossa bancada em Camboriú/SC, preservando a essência da autêntica cutelaria artesanal brasileira.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>🔥 Vocês são fabricantes?</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>🔥</span>
+              <span>Vocês são fabricantes?</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -632,10 +711,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Nossa fábrica e cutelaria fica em Camboriú, Santa Catarina. Daqui enviamos para churrasqueiros, colecionadores e entusiastas de todo o Brasil via transportadora e Correios com seguro total.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>📍 Onde as facas são produzidas?</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>📍</span>
+              <span>Onde as facas são produzidas?</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -647,18 +729,21 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Produzimos facas de churrasco (8", 10", 12"), facas de campo, utilitárias, facas de chef, discos de arado forjados, aço carbono, inox 420C e aço damasco, além de restaurações completas e cutelaria sob medida.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>🛠️ Quais tipos de trabalho vocês fazem?</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>🛠️</span>
+              <span>Quais tipos de trabalho vocês fazem?</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
             type="button"
             onClick={handleResetToMainMenu}
-            className="chat-option-btn-secondary"
+            className="chat-panel-btn-secondary"
           >
-            <RotateCcw size={12} />
+            <RotateCcw size={14} />
             <span>Voltar ao menu principal</span>
           </button>
         </div>
@@ -668,7 +753,7 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
     // 7. CATEGORIA: LOCALIZAÇÃO E HORÁRIO
     if (currentStep === 'CAT_LOCALIZACAO') {
       return (
-        <div className="flex flex-col gap-2 pt-2">
+        <div className="flex flex-col gap-2.5">
           <button
             type="button"
             onClick={() => {
@@ -678,10 +763,13 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Nossa cutelaria e loja física fica na Rua Santa Cecília, 235 - Areias, Camboriú - SC (a minutos de Balneário Camboriú). Será um prazer receber você para conhecer a nossa fábrica!'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>📍 Onde fica a loja?</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>📍</span>
+              <span>Onde fica a loja?</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
@@ -693,18 +781,21 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
                 'Atendimento presencial na fábrica de Segunda a Sexta das 08h às 18h e aos Sábados das 08h às 12h. Nosso WhatsApp de fábrica atende diariamente.'
               );
             }}
-            className="chat-option-btn"
+            className="chat-panel-btn"
           >
-            <span>🕒 Qual o horário de atendimento?</span>
-            <ChevronRight size={14} />
+            <span className="flex items-center gap-2">
+              <span>🕒</span>
+              <span>Qual o horário de atendimento?</span>
+            </span>
+            <ChevronRight size={16} />
           </button>
 
           <button
             type="button"
             onClick={handleResetToMainMenu}
-            className="chat-option-btn-secondary"
+            className="chat-panel-btn-secondary"
           >
-            <RotateCcw size={12} />
+            <RotateCcw size={14} />
             <span>Voltar ao menu principal</span>
           </button>
         </div>
@@ -714,27 +805,27 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
     // 8. CATEGORIA: FALAR COM A FÁBRICA
     if (currentStep === 'CAT_FALAR_FABRICA') {
       return (
-        <div className="flex flex-col gap-2 pt-2">
+        <div className="flex flex-col gap-2.5">
           <button
             type="button"
             onClick={() => {
               openWhatsAppWithTopic('Atendimento Direto com o Cuteleiro');
             }}
-            className="chat-option-btn bg-[#25D366] hover:bg-[#20ba59] text-black font-black border-[#25D366] shadow-[0_0_20px_rgba(37,211,102,0.4)]"
+            className="chat-panel-btn bg-[#25D366] hover:bg-[#20ba59] text-black font-black border-[#25D366] shadow-[0_0_20px_rgba(37,211,102,0.35)]"
           >
-            <span className="flex items-center gap-2">
-              <WhatsAppIcon size={16} color="#000" />
-              <span>Abrir WhatsApp</span>
+            <span className="flex items-center gap-2.5">
+              <WhatsAppIcon size={18} color="#000" />
+              <span className="text-sm">Abrir WhatsApp</span>
             </span>
-            <ExternalLink size={14} />
+            <ExternalLink size={16} />
           </button>
 
           <button
             type="button"
             onClick={handleResetToMainMenu}
-            className="chat-option-btn-secondary"
+            className="chat-panel-btn-secondary"
           >
-            <RotateCcw size={12} />
+            <RotateCcw size={14} />
             <span>Voltar ao menu principal</span>
           </button>
         </div>
@@ -744,41 +835,45 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
     // 9. APÓS CADA RESPOSTA (REGRA 4)
     // Mostra somente: Voltar ao menu principal, Ver outras dúvidas, Falar com a fábrica
     return (
-      <div className="flex flex-col gap-2 pt-2">
+      <div className="flex flex-col gap-2.5">
         <button
           type="button"
           onClick={handleResetToMainMenu}
-          className="chat-option-btn border-stone-700 hover:border-[#ff6a00]"
+          className="chat-panel-btn border-stone-700 hover:border-[#ff6a00]"
         >
-          <span className="flex items-center gap-2">
-            <RotateCcw size={13} className="text-[#ff6a00]" />
-            <span>Voltar ao menu principal</span>
+          <span className="flex items-center gap-2.5">
+            <RotateCcw size={15} className="text-[#ff6a00]" />
+            <span className="font-semibold">Voltar ao menu principal</span>
           </span>
-          <ChevronRight size={14} />
+          <ChevronRight size={16} />
         </button>
 
         <button
           type="button"
           onClick={handleBackToCategory}
-          className="chat-option-btn border-stone-700 hover:border-[#ff6a00]"
+          className="chat-panel-btn border-stone-700 hover:border-[#ff6a00]"
         >
-          <span className="flex items-center gap-2">
-            <HelpCircle size={13} className="text-stone-400" />
-            <span>Ver outras dúvidas</span>
+          <span className="flex items-center gap-2.5">
+            <HelpCircle size={15} className="text-stone-400" />
+            <span className="font-semibold">Ver outras dúvidas</span>
           </span>
-          <ChevronRight size={14} />
+          <ChevronRight size={16} />
         </button>
 
         <button
           type="button"
           onClick={() => openWhatsAppWithTopic('Atendimento de Fábrica')}
-          className="chat-option-btn border-[#25D366]/40 hover:border-[#25D366] text-[#25D366]"
+          className="chat-panel-btn border-[#25D366]/40 hover:border-[#25D366] bg-[#0f1712]/70 hover:bg-[#142318] text-[#25D366] group"
         >
-          <span className="flex items-center gap-2">
-            <WhatsAppIcon size={14} color="#25D366" />
-            <span>Falar com a fábrica</span>
+          <span className="flex items-center gap-3">
+            <span className="w-7 h-7 rounded-lg bg-[#25D366] flex items-center justify-center shadow-xs flex-shrink-0">
+              <WhatsAppIcon size={16} color="#ffffff" />
+            </span>
+            <span className="font-bold text-[#25D366] group-hover:text-white transition-colors">
+              Falar com a fábrica
+            </span>
           </span>
-          <ExternalLink size={14} />
+          <ExternalLink size={16} className="text-[#25D366] group-hover:translate-x-0.5 transition-transform" />
         </button>
       </div>
     );
@@ -786,144 +881,142 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
 
   return (
     <>
-      {/* Botão Flutuante Discreto para Abrir o Chatbot */}
-      <div className="fixed bottom-24 right-6 z-40">
+      {/* Botão Flutuante de Atendimento Humanizado com o Menininho de Chapéu */}
+      <div className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end">
+        {/* Balão de fala convidativo acima do botão */}
+        <div className="mb-2 relative animate-bounce select-none pointer-events-none">
+          <div className="bg-gradient-to-r from-[#1c1611] to-[#261c14] border border-[#ff6a00] text-stone-100 px-3.5 py-1.5 rounded-2xl shadow-[0_4px_16px_rgba(255,106,0,0.3)] flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+            <span className="font-montserrat text-xs sm:text-[13px] font-bold text-stone-100">
+              Posso te ajudar?
+            </span>
+            <span className="text-sm">👋</span>
+          </div>
+          {/* Ponta do balão apontando para o atendente */}
+          <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-[#261c14] border-r border-b border-[#ff6a00] rotate-45" />
+        </div>
+
+        {/* Botão principal com o Menininho de Chapéu */}
         <button
           type="button"
-          onClick={() => setIsOpen((prev) => !prev)}
-          className="group relative flex items-center gap-2.5 px-4 py-3 rounded-full bg-stone-900 border border-[#ff6a0066] hover:border-[#ff6a00] text-stone-100 shadow-[0_0_20px_rgba(255,106,0,0.35)] hover:shadow-[0_0_30px_rgba(255,106,0,0.6)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer select-none"
-          aria-label={isOpen ? 'Fechar atendimento' : 'Abrir atendimento guiado'}
+          onClick={handleOpenChat}
+          className="group relative flex items-center gap-3 pl-1.5 pr-4 sm:pr-5 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-[#17110c] via-[#1f1610] to-[#17110c] border-2 border-[#ff6a00] text-stone-100 shadow-[0_6px_25px_rgba(255,106,0,0.4)] hover:shadow-[0_8px_35px_rgba(255,106,0,0.7)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer select-none"
+          aria-label="Abrir atendimento da Fronteira Cutelaria - Posso te ajudar?"
         >
-          <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff6a00] opacity-75" />
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#ff6a00]" />
-          </span>
-          <MessageSquare size={17} className="text-[#ff6a00]" />
-          <span className="hidden sm:inline font-montserrat text-xs font-bold uppercase tracking-wider text-stone-200 group-hover:text-white">
-            Dúvidas Frequentes
-          </span>
+          {/* Avatar do Menininho com Chapéu */}
+          <div className="relative flex-shrink-0">
+            <BoyWithHatAvatar size={48} className="filter drop-shadow-md rounded-full transform group-hover:rotate-3 transition-transform" />
+            {/* Ponto verde de status online */}
+            <span className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-[#25D366] border-2 border-[#17110c] shadow-xs" />
+          </div>
+
+          <div className="flex flex-col text-left">
+            <span className="font-montserrat text-[10px] text-[#ff6a00] uppercase tracking-wider font-extrabold flex items-center gap-1 leading-tight">
+              Atendimento
+            </span>
+            <span className="font-montserrat text-xs sm:text-sm font-black text-white group-hover:text-[#ff6a00] transition-colors leading-tight">
+              Posso ajudar?
+            </span>
+          </div>
         </button>
       </div>
 
-      {/* Janela Modal do Chatbot Guiado */}
+      {/* TELA INTEIRA DEDICADA AO ATENDIMENTO DA FRONTEIRA CUTELARIA */}
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs">
-            
-            {/* Backdrop click to close */}
-            <div 
-              className="absolute inset-0" 
-              onClick={() => setIsOpen(false)}
-            />
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 15 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="fixed inset-0 z-50 bg-[#070504] text-stone-200 flex flex-col justify-between overflow-hidden"
+          >
+            {/* CONTAINER CENTRALIZADO ELEGANTE PARA MOBILE E DESKTOP */}
+            <div className="w-full max-w-3xl mx-auto h-full flex flex-col bg-[#0b0806] sm:border-x sm:border-stone-800/80 shadow-2xl relative">
+              
+              {/* ============================================================ */}
+              {/* 1. CABEÇALHO FIXO DA TELA DE ATENDIMENTO                     */}
+              {/* ============================================================ */}
+              <header className="sticky top-0 z-30 bg-[#120e0b]/95 backdrop-blur-md border-b border-stone-800/90 px-4 py-3 sm:px-6 flex items-center justify-between gap-3 shadow-md flex-shrink-0">
+                {/* Lado esquerdo: ← Voltar ao site */}
+                <button
+                  type="button"
+                  onClick={handleCloseChat}
+                  className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-stone-900/90 hover:bg-[#ff6a00] text-stone-200 hover:text-black border border-stone-700/80 hover:border-[#ff6a00] font-montserrat text-xs sm:text-sm font-bold transition-all duration-150 cursor-pointer shadow-sm active:scale-95 group"
+                  aria-label="Voltar para o site"
+                >
+                  <ArrowLeft size={16} className="stroke-[2.5] group-hover:-translate-x-0.5 transition-transform" />
+                  <span>← Voltar ao site</span>
+                </button>
 
-            <motion.div
-              drag="y"
-              dragDirectionLock
-              dragConstraints={{ top: 0, bottom: 0 }}
-              dragElastic={{ top: 0.05, bottom: 0.7 }}
-              onDragEnd={(_e, info) => {
-                if (info.offset.y > 75 || info.velocity.y > 350) {
-                  setIsOpen(false);
-                }
-              }}
-              initial={{ opacity: 0, y: '100%' }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: '100%' }}
-              transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-              className="relative z-10 w-full sm:max-w-md max-h-[85vh] sm:max-h-[640px] flex flex-col bg-[#0d0a08] border border-stone-800 rounded-t-2xl sm:rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.9)] overflow-hidden touch-pan-y"
-            >
-              {/* Barra Superior Deslizável / Drag Handle (Puxe para baixo para fechar) */}
-              <div 
-                onTouchStart={handleTopBarTouchStart}
-                onTouchEnd={handleTopBarTouchEnd}
-                className="w-full pt-2.5 pb-1 flex flex-col items-center justify-center cursor-grab active:cursor-grabbing bg-[#15100c] border-b border-stone-800/60 select-none group"
-                title="Puxe para baixo para fechar"
-              >
-                <div className="w-12 h-1.5 rounded-full bg-stone-500/80 group-hover:bg-[#ff6a00] group-active:bg-[#ff6a00] transition-colors" />
-                <span className="text-[9px] font-montserrat uppercase tracking-wider text-stone-400 mt-1 select-none font-medium">
-                  Deslize para baixo para fechar
-                </span>
-              </div>
-
-              {/* Header do Chatbot */}
-              <div 
-                onTouchStart={handleTopBarTouchStart}
-                onTouchEnd={handleTopBarTouchEnd}
-                className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-[#140f0c] via-[#100d0b] to-[#140f0c] border-b border-stone-800 cursor-grab active:cursor-grabbing select-none"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    <img
-                      src={LOGO_URL}
-                      alt="Fronteira Cutelaria"
-                      className="w-9 h-9 object-contain filter drop-shadow-[0_0_8px_rgba(255,106,0,0.6)]"
-                    />
-                    <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-[#25D366] border border-[#0d0a08]" />
+                {/* Centro / Marca: Menininho de Chapéu + Fronteira Cutelaria */}
+                <div className="flex items-center gap-2.5 sm:gap-3 text-left">
+                  <div className="relative flex-shrink-0">
+                    <BoyWithHatAvatar size={40} className="filter drop-shadow-[0_0_8px_rgba(255,106,0,0.6)] rounded-full" />
+                    <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-[#25D366] border-2 border-[#120e0b]" />
                   </div>
-                  <div>
-                    <h3 className="font-cinzel text-xs sm:text-sm font-black text-stone-100 uppercase tracking-wider">
-                      Atendimento Fronteira
-                    </h3>
-                    <p className="font-montserrat text-[10px] text-stone-400 flex items-center gap-1 font-medium">
-                      <span>Fábrica & Cutelaria</span>
-                      <span className="text-[#ff6a00]">•</span>
-                      <span className="text-[#ff6a00]">Menu Guiado</span>
-                    </p>
+                  <div className="flex flex-col">
+                    <span className="font-cinzel text-xs sm:text-base font-black text-stone-100 uppercase tracking-wider leading-tight">
+                      Fronteira Cutelaria
+                    </span>
+                    <span className="font-montserrat text-[10px] sm:text-xs text-[#ff6a00] uppercase tracking-widest font-semibold flex items-center gap-1.5 leading-tight">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] inline-block animate-pulse" />
+                      Atendimento
+                    </span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1">
-                  <button
-                    type="button"
-                    onClick={handleResetToMainMenu}
-                    className="p-1.5 rounded-sm hover:bg-stone-800 text-stone-400 hover:text-[#ff6a00] transition-colors"
-                    title="Reiniciar menu"
-                    aria-label="Reiniciar para o menu principal"
-                  >
-                    <RotateCcw size={16} />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setIsOpen(false)}
-                    className="p-1.5 rounded-sm hover:bg-stone-800 text-stone-400 hover:text-white transition-colors"
-                    aria-label="Fechar janela de atendimento"
-                  >
-                    <X size={18} />
-                  </button>
-                </div>
-              </div>
+                {/* Reiniciar Atendimento */}
+                <button
+                  type="button"
+                  onClick={handleResetToMainMenu}
+                  className="p-2 sm:px-3 sm:py-2 rounded-lg bg-stone-900/70 hover:bg-stone-800 text-stone-400 hover:text-[#ff6a00] border border-stone-800/80 transition-colors flex items-center gap-1.5 cursor-pointer text-xs font-semibold"
+                  title="Reiniciar menu principal"
+                  aria-label="Reiniciar atendimento"
+                >
+                  <RotateCcw size={15} />
+                  <span className="hidden md:inline">Início</span>
+                </button>
+              </header>
 
-              {/* Mensagens e Histórico */}
+              {/* ============================================================ */}
+              {/* 2. ÁREA DAS MENSAGENS COM ROLAGEM INDEPENDENTE              */}
+              {/* ============================================================ */}
               <div 
                 ref={chatScrollRef}
-                className="flex-1 overflow-y-auto p-4 space-y-3.5 font-montserrat text-xs scroll-smooth bg-[radial-gradient(ellipse_at_top,rgba(255,106,0,0.04),transparent_60%)]"
+                className="flex-1 overflow-y-auto px-4 py-5 sm:px-6 space-y-4 font-montserrat text-xs sm:text-sm scroll-smooth bg-[radial-gradient(ellipse_at_top,rgba(255,106,0,0.04),transparent_70%)]"
               >
                 {messages.map((msg) => (
                   <div
                     key={msg.id}
-                    className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                    className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start items-end gap-2.5'}`}
                   >
+                    {msg.sender === 'bot' && (
+                      <div className="flex-shrink-0 mb-1">
+                        <BoyWithHatAvatar size={34} className="rounded-full shadow-md filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]" />
+                      </div>
+                    )}
                     <div
-                      className={`max-w-[85%] rounded-lg px-3.5 py-2.5 leading-relaxed shadow-sm ${
+                      className={`max-w-[85%] sm:max-w-[78%] rounded-2xl p-4 leading-relaxed shadow-md ${
                         msg.sender === 'user'
-                          ? 'bg-[#ff6a00] text-black font-bold rounded-br-none'
-                          : 'bg-[#181310] border border-stone-800 text-stone-200 rounded-bl-none'
+                          ? 'bg-[#ff6a00] text-black font-bold rounded-tr-xs'
+                          : 'bg-[#181310] border border-stone-800 text-stone-200 rounded-tl-xs'
                       }`}
                     >
-                      <p>{msg.text}</p>
+                      <p className="whitespace-pre-line">{msg.text}</p>
 
                       {/* Botão de ação opcional dentro da mensagem do bot */}
                       {msg.actionButton && (
-                        <div className="mt-3 pt-2 border-t border-stone-800/80">
+                        <div className="mt-3.5 pt-3 border-t border-stone-800">
                           <button
                             type="button"
                             onClick={msg.actionButton.action}
-                            className="w-full py-2 px-3 rounded-sm bg-gradient-to-r from-[#ff6a00] to-[#ff7a1a] text-black font-black uppercase text-[11px] tracking-wider flex items-center justify-center gap-1.5 shadow-md hover:brightness-110 active:scale-98 transition-all cursor-pointer"
+                            className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#ff6a00] to-[#ff7a1a] text-black font-black uppercase text-xs tracking-wider flex items-center justify-center gap-2 shadow-lg hover:brightness-110 active:scale-98 transition-all cursor-pointer"
                           >
                             {msg.actionButton.icon === 'whatsapp' ? (
-                              <WhatsAppIcon size={14} color="#000" />
+                              <WhatsAppIcon size={16} color="#000" />
                             ) : (
-                              <Flame size={14} className="text-black" />
+                              <Flame size={16} className="text-black" />
                             )}
                             <span>{msg.actionButton.label}</span>
                           </button>
@@ -935,84 +1028,97 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
 
                 {/* Efeito digitando */}
                 {isTyping && (
-                  <div className="flex justify-start">
-                    <div className="bg-[#181310] border border-stone-800 rounded-lg px-3 py-2 flex items-center gap-1 text-stone-400">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#ff6a00] animate-bounce" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#ff6a00] animate-bounce [animation-delay:0.2s]" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#ff6a00] animate-bounce [animation-delay:0.4s]" />
+                  <div className="flex justify-start items-end gap-2.5">
+                    <div className="flex-shrink-0 mb-1">
+                      <BoyWithHatAvatar size={34} className="rounded-full shadow-md" />
+                    </div>
+                    <div className="bg-[#181310] border border-stone-800 rounded-2xl px-4 py-3 flex items-center gap-1.5 text-stone-400">
+                      <span className="w-2 h-2 rounded-full bg-[#ff6a00] animate-bounce" />
+                      <span className="w-2 h-2 rounded-full bg-[#ff6a00] animate-bounce [animation-delay:0.2s]" />
+                      <span className="w-2 h-2 rounded-full bg-[#ff6a00] animate-bounce [animation-delay:0.4s]" />
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* Área de Opções Guiadas (NÃO há campo de texto livre - Regra 1) */}
-              <div className="p-3 bg-[#110e0b] border-t border-stone-800/90 max-h-[260px] overflow-y-auto">
-                <div className="text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1 px-1 flex items-center justify-between">
-                  <span>Escolha uma opção:</span>
-                  <span className="text-[#ff6a00]">Menu Interativo</span>
+              {/* ============================================================ */}
+              {/* 3. PAINEL FIXO DE OPÇÕES PRONTAS NA PARTE INFERIOR           */}
+              {/* Sempre visível e fácil de encontrar, sem forçar rolagem      */}
+              {/* ============================================================ */}
+              <div className="sticky bottom-0 z-30 bg-gradient-to-t from-[#0d0a08] via-[#120e0b] to-[#120e0b]/98 border-t border-stone-800/90 shadow-[0_-12px_32px_rgba(0,0,0,0.85)] px-4 pt-3 pb-4 sm:px-6 sm:pb-6 flex-shrink-0">
+                
+                {/* Título do painel */}
+                <div className="flex items-center justify-between mb-2.5 px-1">
+                  <span className="font-montserrat text-xs sm:text-sm font-bold text-stone-200">
+                    {currentStep === 'MAIN_MENU' ? 'Como podemos ajudar?' : 'Escolha uma opção:'}
+                  </span>
+                  <span className="font-montserrat text-[10px] text-[#ff6a00] uppercase tracking-wider font-semibold">
+                    Menu Interativo
+                  </span>
                 </div>
-                {renderOptionButtons()}
+
+                {/* Opções de fácil toque em cartões/botões arredondados com rolagem própria se necessário */}
+                <div className="max-h-[46vh] sm:max-h-[280px] overflow-y-auto pr-1">
+                  {renderOptionButtons()}
+                </div>
+
               </div>
 
-              {/* Rodapé institucional */}
-              <div className="px-4 py-2 bg-[#090706] border-t border-stone-900 flex items-center justify-between text-[10px] font-montserrat text-stone-400">
-                <span>Atendimento Oficial</span>
-                <span className="font-cinzel font-bold text-stone-400 uppercase tracking-widest">
-                  Fronteira Cutelaria
-                </span>
-              </div>
-
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Estilos utilitários locais do menu guiado */}
+      {/* Estilos dedicados ao painel de opções */}
       <style>{`
-        .chat-option-btn {
+        .chat-panel-btn {
           display: flex;
           align-items: center;
           justify-content: space-between;
           width: 100%;
+          min-height: 48px;
           text-align: left;
-          padding: 8px 12px;
-          border-radius: 4px;
-          background-color: #17130f;
-          border: 1px solid #29241f;
+          padding: 12px 16px;
+          border-radius: 12px;
+          background: #17130f;
+          border: 1px solid #2e2620;
           font-family: 'Montserrat', sans-serif;
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 600;
-          color: #e5e0dc;
+          color: #f3efe9;
           transition: all 0.15s ease-in-out;
           cursor: pointer;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.35);
         }
-        .chat-option-btn:hover {
-          background-color: #211b15;
+        .chat-panel-btn:hover {
+          background: #231c16;
           border-color: #ff6a00;
           color: #ffffff;
-          transform: translateX(2px);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 14px rgba(255,106,0,0.18);
         }
-        .chat-option-btn:active {
+        .chat-panel-btn:active {
           transform: scale(0.99);
         }
-        .chat-option-btn-secondary {
+        .chat-panel-btn-secondary {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 6px;
+          gap: 8px;
           width: 100%;
-          padding: 7px 10px;
-          border-radius: 4px;
+          min-height: 42px;
+          padding: 10px 16px;
+          border-radius: 12px;
           background-color: transparent;
-          border: 1px dashed #3a322a;
+          border: 1px dashed #3f362e;
           font-family: 'Montserrat', sans-serif;
-          font-size: 11px;
+          font-size: 12px;
           font-weight: 600;
-          color: #a89f91;
+          color: #b0a698;
           transition: all 0.15s ease-in-out;
           cursor: pointer;
         }
-        .chat-option-btn-secondary:hover {
+        .chat-panel-btn-secondary:hover {
           border-color: #ff6a00;
           color: #ff6a00;
           background-color: #191410;

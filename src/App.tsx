@@ -12,7 +12,6 @@ import { KnifeCareSection } from './components/KnifeCareSection';
 import { ShippingMapSection } from './components/ShippingMapSection';
 import { FaqSection } from './components/FaqSection';
 import { FooterSection } from './components/FooterSection';
-import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { GuidedChatbot } from './components/GuidedChatbot';
 
 export default function App() {
@@ -127,9 +126,6 @@ export default function App() {
 
           {/* Footer */}
           <FooterSection />
-
-          {/* Floating WhatsApp Quick Action */}
-          <FloatingWhatsApp />
         </div>
       )}
 
