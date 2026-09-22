@@ -1005,27 +1005,17 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
 
   return (
     <>
-      {/* Botão Flutuante de Atendimento Humanizado com o Menininho de Chapéu */}
-      <div className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end">
-        {/* Balão de fala convidativo acima do botão */}
-        <div className="mb-2 relative animate-bounce select-none pointer-events-none">
-          <div className="bg-gradient-to-r from-[#1c1611] to-[#261c14] border border-[#ff6a00] text-stone-100 px-3.5 py-1.5 rounded-2xl shadow-[0_4px_16px_rgba(255,106,0,0.3)] flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-            <span className="font-montserrat text-xs sm:text-[13px] font-bold text-stone-100">
-              Posso te ajudar?
-            </span>
-            <span className="text-sm">👋</span>
-          </div>
-          {/* Ponta do balão apontando para o atendente */}
-          <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-[#261c14] border-r border-b border-[#ff6a00] rotate-45" />
-        </div>
-
-        {/* Botão principal com o Menininho de Chapéu */}
-        <button
+      {/* Botão Flutuante de Atendimento com o Menininho de Chapéu pulando suavemente */}
+      <div className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40">
+        <motion.button
           type="button"
           onClick={handleOpenChat}
-          className="group relative flex items-center gap-3 pl-1.5 pr-4 sm:pr-5 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-[#17110c] via-[#1f1610] to-[#17110c] border-2 border-[#ff6a00] text-stone-100 shadow-[0_6px_25px_rgba(255,106,0,0.4)] hover:shadow-[0_8px_35px_rgba(255,106,0,0.7)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer select-none"
-          aria-label="Abrir atendimento da Fronteira Cutelaria - Posso te ajudar?"
+          animate={{ y: [0, -7, 0] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="group relative flex items-center gap-3 pl-1.5 pr-4 sm:pr-5 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-[#17110c] via-[#1f1610] to-[#17110c] border-2 border-[#ff6a00] text-stone-100 shadow-[0_6px_25px_rgba(255,106,0,0.4)] hover:shadow-[0_8px_35px_rgba(255,106,0,0.7)] cursor-pointer select-none"
+          aria-label="Abrir atendimento da Fronteira Cutelaria - Posso ajudar?"
         >
           {/* Avatar do Menininho com Chapéu */}
           <div className="relative flex-shrink-0">
@@ -1042,7 +1032,7 @@ export const GuidedChatbot: React.FC<GuidedChatbotProps> = ({ onOpenCatalog }) =
               Posso ajudar?
             </span>
           </div>
-        </button>
+        </motion.button>
       </div>
 
       {/* TELA INTEIRA DEDICADA AO ATENDIMENTO DA FRONTEIRA CUTELARIA */}
